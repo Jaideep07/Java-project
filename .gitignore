@@ -1,6 +1,6 @@
 /.metadata/
-"Java source code"/bin/
-"Java source code"/.gitignore
-"Java source code"/.project
-"Java source code"/.classpath
-Java source code/.settings/*
+Java-source-code/bin/
+Java-source-code/.gitignore
+Java-source-code/.project
+Java-source-code/.classpath
+Java-source-code/.settings/*

@@ -39,7 +39,7 @@ create table Builder (
 );
 
 
-insert into builder values('B1','Architect','Atharv','Sharma',
+insert into Builder values                         ('B1','Architect','Atharv','Sharma',
 						   'Abids','Hyderabad','Telangana',500001,'M',
 						   80000.00,'B1','atharvsharma@gmail.com',9595959501,crypt('Atharv123',gen_salt('bf',4))),
 						   
@@ -49,7 +49,7 @@ insert into builder values('B1','Architect','Atharv','Sharma',
 						   
 						   ('B3','Builder','Bhaskar','Reddy',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   110000.00,'B1','bhaskarreddy@gmail.com',9595959503,crypt('Bhaskar123',gen_salt('bf',4)),
+						   110000.00,'B1','bhaskarreddy@gmail.com',9595959503,crypt('Bhaskar123',gen_salt('bf',4))),
 						   
 						   ('B4','Architect','Bhavesh','Reddy',
 						   'Abids','Hyderabad','Telangana',500001,'M',

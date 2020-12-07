@@ -1,3 +1,4 @@
+/*CREATE EXTENSION pgcrypto;*/
 create table Client (
 	id varchar(10),
 	fname varchar(20),
@@ -6,9 +7,105 @@ create table Client (
 	city varchar(20),
 	state varchar(20),
 	zip_code int,
+	passcode varchar(100),
+	primary key(id)
+);
+/*DROP Table Client;
+SELECT * from Client WHERE passcode=crypt('abhinav123',passcode);
+SELECT * FROM client;*/
+
+insert into Client values('C1','Abhinav','Reddy','Abids','Hyderabad','Telangana',500001,crypt('abhinav123',gen_salt('bf',4))),
+					     ('C2','Bhavith','Sharma','Janpath','New Delhi','Delhi',110001,crypt('bhavith123',gen_salt('bf',4))),
+					     ('C3','Himanshu','Bhatt','MG Road','Bangalore','Karnataka',560001,crypt('himanshu123',gen_salt('bf',4))),
+					     ('C4','Subramaniam','Iyer','Ranganathan Gardens','Chennai','Tamil Nadu',600040,crypt('subramaniam123',gen_salt('bf',4))),
+					     ('C5','Shivaji','Deshpande','Peddar Road','Mumbai','Maharashtra',400026,crypt('shivaji123',gen_salt('bf',4)));
+						 
+create table Builder (
+	id varchar(10),
+	job_description varchar(20),
+	fname varchar(10),
+	lname varchar(10),
+	street_name varchar(20),
+	city varchar(20),
+	state varchar(20),
+	zip_code int,
+	gender char(1) check(gender = 'M' or gender = 'F'),
+	salary numeric(8,2),
+	supervisor_id varchar(10) references Builder(id),
+	email varchar(50),
+	phone bigint,
+	passcode varchar(100),
 	primary key(id)
 );
 
+
+insert into builder values('B1','Architect','Atharv','Sharma',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   80000.00,'B1','atharvsharma@gmail.com',9595959501,crypt('Atharv123',gen_salt('bf',4))),
+						   
+						   ('B2','Civil Engr','Arun','Varma',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   50000.00,'B1','arunvarma@gmail.com',9595959502,crypt('Arun123',gen_salt('bf',4))),
+						   
+						   ('B3','Builder','Bhaskar','Reddy',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   110000.00,'B1','bhaskarreddy@gmail.com',9595959503,crypt('Bhaskar123',gen_salt('bf',4)),
+						   
+						   ('B4','Architect','Bhavesh','Reddy',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   70000.00,'B1','bhaveshreddy@gmail.com',9595959504,crypt('Bhavesh123',gen_salt('bf',4))),
+						   
+						   ('B5','Civil Engr','David','Muller',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   60000.00,'B5','davidmuller@gmail.com',9595959505,crypt('David123',gen_salt('bf',4))),
+						   
+						   ('B6','Builder','Dharani','Prasad',
+						   'Abids','Hyderabad','Telangana',500001,'F',
+						   120000.00,'B5','dharaniprasad@gmail.com',9595959506,crypt('Dharani123',gen_salt('bf',4))),
+						   
+						   ('B7','Architect','Alekhya','Singh',
+						   'Abids','Hyderabad','Telangana',500001,'F',
+						   85000.00,'B5','alekhyasingh@gmail.com',9595959507,crypt('Alekhya123',gen_salt('bf',4))),
+						   
+						   ('B8','Civil Engr','Preethi','Shingh',
+						   'Abids','Hyderabad','Telangana',500001,'F',
+						   45000.00,'B5','preethisingh@gmail.com',9595959508,crypt('Preethi123',gen_salt('bf',4))),
+						   
+						   ('B9','Builder','Rohan','Singh',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   110000.00,'B9','rohansingh@gmail.com',9595959509,crypt('Rohan123',gen_salt('bf',4))),
+						   
+						   ('B10','Architect','John','Abranam',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   80000.00,'B9','johnabraham@gmail.com',9595959510,crypt('John123',gen_salt('bf',4))),
+						   
+						   ('B11','Civil Engr','Sanchi','Chopra',
+						   'Abids','Hyderabad','Telangana',500001,'F',
+						   65000.00,'B9','sanchichopra@gmail.com',9595959511,crypt('Sanchi123',gen_salt('bf',4))),
+						   
+						   ('B12','Builder','Pranav','Reddy',
+						   'Abids','Hyderabad','Telangana',500001,'M',
+						   100000.00,'B9','pranavreddy@gmail.com',9595959512,crypt('Pranav123',gen_salt('bf',4)));
+							
+create table Retailer (
+	id varchar(10),
+	name varchar(20),
+	Street_name varchar(20),
+	city varchar(20),
+	state varchar(20),
+	Zip_code int,
+	email varchar(80),
+	passcode varchar(100),
+	service_rating numeric(2,1),
+	primary key(id)
+);
+
+insert into Retailer values('R1','Abhishek','Abids','Hyderabad','Telangana',500001,'abhishek@gmail.com',crypt('qwe@1244',gen_salt('bf',4)),4.5),
+					       ('R2','Bharghav','Janpath','New Delhi','Delhi',110001,'bharghav@gmail.com',crypt('trqw@1342',gen_salt('bf',4)),4.8),
+					       ('R3','Hemanth','MG Road','Bangalore','Karnataka',560001,'hemanth@gmail.com',crypt('fgyt$353',gen_salt('bf',4)),4.4),
+					       ('R4','Sharath','Ranganathan Gardens','Chennai','Tamil Nadu',600040,'sharath@gmail.com',crypt('asdfe&31',gen_salt('bf',4)),4.7),
+					       ('R5','Varun','Peddar Road','Mumbai','Maharashtra',400026,'varun@gmail.com',crypt('gyhd@tyhn',gen_salt('bf',4)),4.9);
+						   
 create table Client_Emails (
 	id varchar(10),
 	email varchar(80),
@@ -17,6 +114,13 @@ create table Client_Emails (
 	foreign key(id) references Client(id)
 );
 
+insert into Client_Emails values('C1','AbhinavReddy@gmail.com','C1abc'),
+								('C2','BhavithSharma@gmail.com','C2abc'),
+								('C3','HimanshuBhatt@gmail.com','C3abc'),
+								('C4','SubramaniamIyer@gmail.com','C4abc'),
+								('C5','ShivajiDeshpande@gmail.com','C5abc');
+								
+
 create table Client_phone_numbers (
 	id varchar(10),
 	phone bigint,
@@ -24,6 +128,81 @@ create table Client_phone_numbers (
 	foreign key(id) references Client(id)
 );
 
+insert into Client_phone_numbers values('C1',9595959595),
+									   ('C2',8181818181),
+									   ('C3',9090909090),
+									   ('C4',9696969696),
+									   ('C5',9191919191);
+
+
+
+create table Groups (
+	number varchar(10),
+	name varchar(10),
+	category varchar(10),
+	manager_id varchar(10),
+	primary key(number),
+	foreign key(manager_id) references Builder(id)
+);
+
+insert into Groups values('G1','Group1','Commercial','B1'),
+						 ('G2','Group2','Office','B4'),
+						 ('G3','Group3','Private','B7'),
+						 ('G4','Group4','Commercial','B10'),
+						 ('G5','Group5','Office','B2'),
+						 ('G6','Group6','Private','B6');
+						 
+create table Retailer_material (
+	retailer_id varchar(10),
+	material_name varchar(20),
+	material_model varchar(20),
+	material_type varchar(20),
+	manufacturer varchar(20),
+	primary key(retailer_id,material_name,material_model),
+	foreign key(retailer_id) references Retailer(id)
+);
+
+insert into Retailer_material values('R1','Brick Clay','BC-100','Clay','Manufacturer1'),
+							 ('R1','Stoneware Clay','SC-100','Clay','Manufacturer2'),
+							 ('R1','Earthenware Clay','EC-100','Clay','Manufacturer1'),
+							 ('R1','Concrete Sand','CS-100','Sand','Manufacturer3'),
+							 ('R1','Natural Sand','NS-100','Sand','Manufacturer3'),
+							 ('R2','Granite','GR-100','Rock','Manufacturer5'),
+							 ('R2','Sandstone','SR-100','Rock','Manufacturer5'),
+							 ('R2','Limestone','LR-100','Rock','Manufacturer6'),
+							 ('R2','Oak','OHW-100','Hardwood-Wood','Manufacturer7'),
+							 ('R2','Pine','PSW-100','Softwood-Wood','Manufacturer8'),
+							 ('R3','Concrete Sand','CS-100','Sand','Manufacturer4'),
+							 ('R3','Natural Sand','NS-100','Sand','Manufacturer3'),
+							 ('R3','Utility Sand','US-100','Sand','Manufacturer4'),
+							 ('R4','Oak','OHW-100','Hardwood-Wood','Manufacturer7'),
+							 ('R4','Teak','THW-100','Hardwood-Wood','Manufacturer7'),
+							 ('R4','Pine','PSW-100','Softwood-Wood','Manufacturer8'),
+							 ('R4','Ash','ASW-100','Softwood-Wood','Manufacturer8'),
+							 ('R5','OPC','OPC-100','Cement','Manufacturer9'),
+							 ('R5','Sandstone','SR-100','Rock','Manufacturer6'),
+							 ('R5','Limestone','LR-100','Rock','Manufacturer5');
+
+create table Project (
+	number varchar(10),
+	name varchar(20),
+	assigned_date date,
+	start_date date,
+	end_date date,
+	tenure int,
+	group_number varchar(10),
+	primary key(number),
+	foreign key(group_number) references Groups(number)
+);
+
+insert into Project values('P1','Project1','2018-05-05','2018-06-05','2020-01-05',2,'G1'),
+						  ('P2','Project2','2016-05-15','2016-06-15','2021-02-10',2,'G2'),
+						  ('P3','Project2','2019-05-25','2019-06-25','2022-02-15',2,'G3'),
+						  ('P4','Project2','2018-05-05','2018-06-05','2020-04-20',2,'G4'),
+						  ('P5','Project2','2016-05-15','2016-06-15','2021-05-25',2,'G5'),
+						  ('P6','Project2','2019-05-25','2019-06-25','2022-06-30',2,'G6'),
+						  ('P7','Project2','2019-06-27','2019-07-25','2022-07-25',2,'G6');
+						  
 create table Site (
 	id varchar(10),
 	street_name	varchar(20),
@@ -42,6 +221,14 @@ create table Site (
 	foreign key(project_no) references Project(number)
 );
 
+insert into Site values('S1','Abids','Hyderabad','Telangana',500001,1500,'Open','Black','P1','C1','2005-10-25','Individual'),
+						('S2','Janpath','New Delhi','Delhi',110001,500,'Open','Sandy','P2','C2','2005-10-05', 'Individual'),
+						('S3','Janpath','New Delhi','Delhi',110001,1500,'Open','Sandy','P3','C2','2008-12-15' ,'Joint' ),
+						('S4','MG Road','Bangalore','Karnataka',560001,600,'Tundra','Sandy','P4','C3','2000-09-05' ,'Individual' ),
+						('S5','Ranganathan Gardens','Chennai','Tamil Nadu',600040,600,'Open','Sandy','P5','C4','1995-02-20' ,'Joint'),
+						('S6','Peddar Road','Mumbai','Maharashtra',400026,2000,'Open','Mountain','P6','C5','2010-05-05' ,'Individual'),
+						('S7','Peddar Road','Mumbai','Maharashtra',400026,2500,'Open','Mountain','P7','C5','2015-06-10' ,'Joint');
+
 create table Raw_materials (
 	site_id varchar(10),
 	material_name varchar(20),
@@ -54,168 +241,6 @@ create table Raw_materials (
 	foreign key(site_id) references Site(id)
 );
 
-create table Retailer (
-	id varchar(10),
-	name varchar(20),
-	Street_name varchar(20),
-	city varchar(20),
-	state varchar(20),
-	Zip_code int,
-	email varchar(80),
-	password varchar(10),
-	service_rating numeric(2,1),
-	primary key(id)
-);
-
-create table Retailer_material (
-	retailer_id varchar(10),
-	material_name varchar(20),
-	material_model varchar(20),
-	material_type varchar(20),
-	manufacturer varchar(20),
-	primary key(retailer_id,material_name,material_model),
-	foreign key(retailer_id) references Retailer(id)
-);
-
-create table Supplies (
-	retailer_id varchar(10),
-	site_id	varchar(10),
-	material_model varchar(20),
-	material_name varchar(20),
-	primary key(site_id,material_model,material_name),
-	foreign key(retailer_id) references Retailer(id),
-	foreign key(site_id,material_name,material_model) references Raw_materials(site_id,material_name,material_model)
-);
-
-create table Project (
-	number varchar(10),
-	name varchar(20),
-	assigned_date date,
-	start_date date,
-	end_date date,
-	tenure int,
-	group_number varchar(10),
-	primary key(number),
-	foreign key(group_number) references Groups(number)
-);
-
- 
-
-create table Builder (
-	id varchar(10),
-	job_description varchar(20),
-	fname varchar(10),
-	lname varchar(10),
-	street_name varchar(20),
-	city varchar(20),
-	state varchar(20),
-	zip_code int,
-	gender char(1) check(gender = 'M' or gender = 'F'),
-	salary numeric(8,2),
-	supervisor_id varchar(10) references Builder(id),
-	email varchar(50),
-	phone bigint,
-	password varchar(10),
-	primary key(id)
-);
-
-
-create table Groups (
-	number varchar(10),
-	name varchar(10),
-	category varchar(10),
-	manager_id varchar(10),
-	primary key(number),
-	foreign key(manager_id) references Builder(id)
-);
-
-
-
-create table Works_in (
-	builder_id varchar(10),
-	group_number varchar(10),
-	primary key(builder_id,group_number),
-	foreign key(builder_id) references Builder(id),
-	foreign key(group_number) references Groups(number)
-);
-
-create table Works_on (
-	builder_id varchar(10),
-	project_no varchar(10),
-	hours int,
-	primary key(builder_id,project_no),
-	foreign key(builder_id) references Builder(id),
-	foreign key(project_no) references Project(number)
-);
-
-create table Subcontracts (
-	project_number varchar(10),
-	contract_name varchar(10),
-	company_name varchar(20),
-	contact_number bigint,
-	primary key(contract_name),
-	foreign key(project_number) references Project(number)
-);
-
-
-create table Machinery (
-	contract_name varchar(10),
-	type varchar(20),
-	contract_duration int,
-	expected_budget numeric(10,2),
-	capacity varchar,
-	primary key(contract_name),
-	foreign key(contract_name) references Subcontracts(contract_name)
-);
-
-create table Plumbing (
-	contract_name varchar(10),
-	type varchar(20),
-	contract_duration int,
-	expected_budget numeric(10,2),
-	total_pipes_length varchar,
-	primary key(contract_name),
-	foreign key(contract_name) references Subcontracts(contract_name)
-);
-
-create table Electrical (
-	contract_name varchar(10),
-	type varchar(20),
-	contract_duration int,
-	expected_budget numeric(10,2),
-	total_wiring_length varchar,
-	primary key(contract_name),
-	foreign key(contract_name) references Subcontracts(contract_name)
-);
-
-insert into Client values('C1','Abhinav','Reddy','Abids','Hyderabad','Telangana',500001),
-					     ('C2','Bhavith','Sharma','Janpath','New Delhi','Delhi',110001),
-					     ('C3','Himanshu','Bhatt','MG Road','Bangalore','Karnataka',560001),
-					     ('C4','Subramaniam','Iyer','Ranganathan Gardens','Chennai','Tamil Nadu',600040),
-					     ('C5','Shivaji','Deshpande','Peddar Road','Mumbai','Maharashtra',400026);
-
-
-insert into Client_Emails values('C1','AbhinavReddy@gmail.com','C1abc'),
-								('C2','BhavithSharma@gmail.com','C2abc'),
-								('C3','HimanshuBhatt@gmail.com','C3abc'),
-								('C4','SubramaniamIyer@gmail.com','C4abc'),
-								('C5','ShivajiDeshpande@gmail.com','C5abc');
-								
-insert into Client_phone_numbers values('C1',9595959595),
-									   ('C2',8181818181),
-									   ('C3',9090909090),
-									   ('C4',9696969696),
-									   ('C5',9191919191);
-
-insert into Site values('S1','Abids','Hyderabad','Telangana',500001,1500,'Open','Black','P1','C1','2005-10-25','Individual'),
-						('S2','Janpath','New Delhi','Delhi',110001,500,'Open','Sandy','P2','C2','2005-10-05', 'Individual'),
-						('S3','Janpath','New Delhi','Delhi',110001,1500,'Open','Sandy','P3','C2','2008-12-15' ,'Joint' ),
-						('S4','MG Road','Bangalore','Karnataka',560001,600,'Tundra','Sandy','P4','C3','2000-09-05' ,'Individual' ),
-						('S5','Ranganathan Gardens','Chennai','Tamil Nadu',600040,600,'Open','Sandy','P5','C4','1995-02-20' ,'Joint'),
-						('S6','Peddar Road','Mumbai','Maharashtra',400026,2000,'Open','Mountain','P6','C5','2010-05-05' ,'Individual'),
-						('S7','Peddar Road','Mumbai','Maharashtra',400026,2500,'Open','Mountain','P7','C5','2015-06-10' ,'Joint');
-
-				
 insert into Raw_materials values('S1','Brick Clay','BC-100','Clay',1000,5000,8000),
 								('S1','Granite','GR-100','Rock',1000,500,1500),
 								('S1','Concrete Sand','CS-100','Sand',1000,600,2000),
@@ -257,34 +282,16 @@ insert into Raw_materials values('S1','Brick Clay','BC-100','Clay',1000,5000,800
 								('S7','Concrete Sand','CS-100','Sand',1000,600,2000),
 								('S7','Pine','PSW-100','Softwood-Wood',800,200,1000),
 								('S7','OPC','OPC-100','Cement',1000,100,500);
-								
-insert into Retailer values('R1','Abhishek','Abids','Hyderabad','Telangana',500001,'abhishek@gmail.com','qwe@1244',4.5),
-					       ('R2','Bharghav','Janpath','New Delhi','Delhi',110001,'bharghav@gmail.com','trqw@1342',4.8),
-					       ('R3','Hemanth','MG Road','Bangalore','Karnataka',560001,'hemanth@gmail.com','fgyt$353',4.4),
-					       ('R4','Sharath','Ranganathan Gardens','Chennai','Tamil Nadu',600040,'sharath@gmail.com','asdfe&31',4.7),
-					       ('R5','Varun','Peddar Road','Mumbai','Maharashtra',400026,'varun@gmail.com','gyhd@tyhn',4.9);
-	
-								
-insert into Retailer_material values('R1','Brick Clay','BC-100','Clay','Manufacturer1'),
-							 ('R1','Stoneware Clay','SC-100','Clay','Manufacturer2'),
-							 ('R1','Earthenware Clay','EC-100','Clay','Manufacturer1'),
-							 ('R1','Concrete Sand','CS-100','Sand','Manufacturer3'),
-							 ('R1','Natural Sand','NS-100','Sand','Manufacturer3'),
-							 ('R2','Granite','GR-100','Rock','Manufacturer5'),
-							 ('R2','Sandstone','SR-100','Rock','Manufacturer5'),
-							 ('R2','Limestone','LR-100','Rock','Manufacturer6'),
-							 ('R2','Oak','OHW-100','Hardwood-Wood','Manufacturer7'),
-							 ('R2','Pine','PSW-100','Softwood-Wood','Manufacturer8'),
-							 ('R3','Concrete Sand','CS-100','Sand','Manufacturer4'),
-							 ('R3','Natural Sand','NS-100','Sand','Manufacturer3'),
-							 ('R3','Utility Sand','US-100','Sand','Manufacturer4'),
-							 ('R4','Oak','OHW-100','Hardwood-Wood','Manufacturer7'),
-							 ('R4','Teak','THW-100','Hardwood-Wood','Manufacturer7'),
-							 ('R4','Pine','PSW-100','Softwood-Wood','Manufacturer8'),
-							 ('R4','Ash','ASW-100','Softwood-Wood','Manufacturer8'),
-							 ('R5','OPC','OPC-100','Cement','Manufacturer9'),
-							 ('R5','Sandstone','SR-100','Rock','Manufacturer6'),
-							 ('R5','Limestone','LR-100','Rock','Manufacturer5');
+
+create table Supplies (
+	retailer_id varchar(10),
+	site_id	varchar(10),
+	material_model varchar(20),
+	material_name varchar(20),
+	primary key(site_id,material_model,material_name),
+	foreign key(retailer_id) references Retailer(id),
+	foreign key(site_id,material_name,material_model) references Raw_materials(site_id,material_name,material_model)
+);
 
 insert into Supplies values('R1','S1','BC-100','Brick Clay'),
 						   ('R2','S1','GR-100','Granite'),
@@ -328,93 +335,14 @@ insert into Supplies values('R1','S1','BC-100','Brick Clay'),
 						   ('R4','S7','PSW-100','Pine'),
 						   ('R5','S7','OPC-100','OPC');
 
+create table Works_in (
+	builder_id varchar(10),
+	group_number varchar(10),
+	primary key(builder_id,group_number),
+	foreign key(builder_id) references Builder(id),
+	foreign key(group_number) references Groups(number)
+);
 
-insert into Project values('P1','Project1','2018-05-05','2018-06-05','2020-01-05',2,'G1'),
-						  ('P2','Project2','2016-05-15','2016-06-15','2021-02-10',2,'G2'),
-						  ('P3','Project2','2019-05-25','2019-06-25','2022-02-15',2,'G3'),
-						  ('P4','Project2','2018-05-05','2018-06-05','2020-04-20',2,'G4'),
-						  ('P5','Project2','2016-05-15','2016-06-15','2021-05-25',2,'G5'),
-						  ('P6','Project2','2019-05-25','2019-06-25','2022-06-30',2,'G6'),
-						  ('P7','Project2','2019-06-27','2019-07-25','2022-07-25',2,'G6');
-						  
-insert into builder values('B1','Architect','Atharv','Sharma',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   80000.00,'B1','atharvsharma@gmail.com',9595959501,'Atharv123'),
-						   
-						   ('B2','Civil Engr','Arun','Varma',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   50000.00,'B1','arunvarma@gmail.com',9595959502,'Arun123'),
-						   
-						   ('B3','Builder','Bhaskar','Reddy',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   110000.00,'B1','bhaskarreddy@gmail.com',9595959503,'Bhaskar123'),
-						   
-						   ('B4','Architect','Bhavesh','Reddy',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   70000.00,'B1','bhaveshreddy@gmail.com',9595959504,'Bhavesh123'),
-						   
-						   ('B5','Civil Engr','David','Muller',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   60000.00,'B5','davidmuller@gmail.com',9595959505,'David123'),
-						   
-						   ('B6','Builder','Dharani','Prasad',
-						   'Abids','Hyderabad','Telangana',500001,'F',
-						   120000.00,'B5','dharaniprasad@gmail.com',9595959506,'Dharani123'),
-						   
-						   ('B7','Architect','Alekhya','Singh',
-						   'Abids','Hyderabad','Telangana',500001,'F',
-						   85000.00,'B5','alekhyasingh@gmail.com',9595959507,'Alekhya123'),
-						   
-						   ('B8','Civil Engr','Preethi','Shingh',
-						   'Abids','Hyderabad','Telangana',500001,'F',
-						   45000.00,'B5','preethisingh@gmail.com',9595959508,'Preethi123'),
-						   
-						   ('B9','Builder','Rohan','Singh',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   110000.00,'B9','rohansingh@gmail.com',9595959509,'Rohan123'),
-						   
-						   ('B10','Architect','John','Abranam',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   80000.00,'B9','johnabraham@gmail.com',9595959510,'John123'),
-						   
-						   ('B11','Civil Engr','Sanchi','Chopra',
-						   'Abids','Hyderabad','Telangana',500001,'F',
-						   65000.00,'B9','sanchichopra@gmail.com',9595959511,'Sanchi123'),
-						   
-						   ('B12','Builder','Pranav','Reddy',
-						   'Abids','Hyderabad','Telangana',500001,'M',
-						   100000.00,'B9','pranavreddy@gmail.com',9595959512,'Pranav123');
-						   				   
-						   
-insert into Groups values('G1','Group1','Commercial','B1'),
-						 ('G2','Group2','Office','B4'),
-						 ('G3','Group3','Private','B7'),
-						 ('G4','Group4','Commercial','B10'),
-						 ('G5','Group5','Office','B2'),
-						 ('G6','Group6','Private','B6');
-						 
-						 
-insert into Works_on values('B1','P1',5),
-						   ('B2','P1',6),
-						   ('B3','P1',7),
-						   ('B4','P2',5),
-						   ('B5','P2',6),
-						   ('B6','P2',7),
-						   ('B7','P3',5),
-						   ('B8','P3',6),
-						   ('B9','P3',7),
-						   ('B10','P4',5),
-						   ('B11','P4',6),
-						   ('B12','P4',7),
-						   ('B1','P5',5),
-						   ('B2','P5',6),
-						   ('B3','P5',7),
-						   ('B4','P5',8),
-						   ('B5','P6',5),
-						   ('B6','P6',6),
-						   ('B7','P6',7),
-						   ('B8','P6',8);
-						   
 insert into Works_in values('B1','G1'),
 						   ('B2','G1'),
 						   ('B3','G1'),
@@ -436,6 +364,45 @@ insert into Works_in values('B1','G1'),
 						   ('B7','G6'),
 						   ('B8','G6');
 						   
+create table Works_on (
+	builder_id varchar(10),
+	project_no varchar(10),
+	hours int,
+	primary key(builder_id,project_no),
+	foreign key(builder_id) references Builder(id),
+	foreign key(project_no) references Project(number)
+);
+
+insert into Works_on values('B1','P1',5),
+						   ('B2','P1',6),
+						   ('B3','P1',7),
+						   ('B4','P2',5),
+						   ('B5','P2',6),
+						   ('B6','P2',7),
+						   ('B7','P3',5),
+						   ('B8','P3',6),
+						   ('B9','P3',7),
+						   ('B10','P4',5),
+						   ('B11','P4',6),
+						   ('B12','P4',7),
+						   ('B1','P5',5),
+						   ('B2','P5',6),
+						   ('B3','P5',7),
+						   ('B4','P5',8),
+						   ('B5','P6',5),
+						   ('B6','P6',6),
+						   ('B7','P6',7),
+						   ('B8','P6',8);
+
+create table Subcontracts (
+	project_number varchar(10),
+	contract_name varchar(10),
+	company_name varchar(20),
+	contact_number bigint,
+	primary key(contract_name),
+	foreign key(project_number) references Project(number)
+);
+
 insert into Subcontracts values('P1','P1-Machn','MCompany1',9192919291),
 							  ('P2','P2-Plumb','PCompany1',9292919291),
 							  ('P3','P3-Elect','ECompany1',9392919291),
@@ -445,20 +412,55 @@ insert into Subcontracts values('P1','P1-Machn','MCompany1',9192919291),
 							  ('P6','P6-Machn','MCompany3',9792919291),
 							  ('P6','P6-Plumb','PCompany1',9892919291),
 							  ('P6','P6-Elect','ECompany1',9992919291);
-							  
+
+
+create table Machinery (
+	contract_name varchar(10),
+	type varchar(20),
+	contract_duration int,
+	expected_budget numeric(10,2),
+	capacity varchar,
+	primary key(contract_name),
+	foreign key(contract_name) references Subcontracts(contract_name)
+);
+
 insert into Machinery values('P1-Machn','Excavators',2,50000.00,'270HP'),
 							('P4-Machn','Trenchers',1,80000.00,'2000HP'),
 							('P6-Machn','Loaders',2,70000.00,'260HP');
-							
-							
+
+create table Plumbing (
+	contract_name varchar(10),
+	type varchar(20),
+	contract_duration int,
+	expected_budget numeric(10,2),
+	total_pipes_length varchar,
+	primary key(contract_name),
+	foreign key(contract_name) references Subcontracts(contract_name)
+);
+
 insert into Plumbing values('P2-Plumb','New Drains',1,40000.00,'5KM'),
 						   ('P5-Plumb','Gasfitters',2,30000.00,'2KM');
+
+create table Electrical (
+	contract_name varchar(10),
+	type varchar(20),
+	contract_duration int,
+	expected_budget numeric(10,2),
+	total_wiring_length varchar,
+	primary key(contract_name),
+	foreign key(contract_name) references Subcontracts(contract_name)
+);
 						   
 insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 							 ('P5-Elect','Fuse Work',1,20000.00,'5KM'),
 							 ('P6-Elect','Generator',1,70000.00,'15KM');
-
-
-
-
-
+							 
+							 
+							 
+							 
+							 
+/*DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
+retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;	*/			 
+							 
+DROP table Builder,Client;		 
+							 

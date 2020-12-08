@@ -192,5 +192,116 @@ public class DBAccess {
 		}
 		
 	}
+	
+	public String searchClientName(String clientId)
+	{
+		Connection c = connect();
+		String name="";
+		try {
+			PreparedStatement st = c.prepareStatement("SELECT fname,lname FROM Client WHERE id = ? ;");
+			st.setString(1,clientId);
+			ResultSet re = st.executeQuery();
+			while(re.next())
+			{
+				name = re.getString("fname")+ " " + re.getString("lname");
+			}
+			return(name);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(name);
+		}
+	}
+	
+	public String[] searchClientEmail(String clientId)
+	{
+		Connection c = connect();
+		String Email[] = new String[10];
+		try {
+			PreparedStatement st = c.prepareStatement("SELECT email FROM Client_Emails WHERE id = ? ;");
+			st.setString(1,clientId);
+			ResultSet re = st.executeQuery();
+			
+			int i=0;
+			while(re.next())
+			{
+				Email[i] = re.getString("email");
+				i++;
+			}
+			
+			return(Email);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(Email);
+		}
+	}
+	
+	public long[] searchClientPhoneNo(String clientId)
+	{
+		Connection c = connect();
+		long PhoneNo[] = new long[10];
+		try {
+			
+			PreparedStatement st = c.prepareStatement("SELECT phone FROM Client_phone_numbers WHERE id = ? ;");
+			st.setString(1,clientId);
+			ResultSet re = st.executeQuery();
+			
+			int i=0;
+			while(re.next())
+			{
+				PhoneNo[i] = re.getLong("phone");
+				i++;
+			}
+			
+			return(PhoneNo);
+			
+		}
+		
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(PhoneNo);
+		}
+	}
+	
+	public String searchClientAddress(String clientId)
+	{
+		Connection c = connect();
+		String address = new String();
+		try {
+			
+			PreparedStatement st = c.prepareStatement("SELECT street_name,city,state,zip_code FROM Client WHERE id = ? ;");
+			st.setString(1,clientId);
+			ResultSet re = st.executeQuery();
+			
+			while(re.next())
+			{
+				address = address + re.getString("street_name")+", "+ re.getString("city")+", "+ re.getString("state")+", "+ re.getString("zip_code");
+			}
+			
+			return(address);
+			
+		}
+		
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(address);
+		}
+	}
+	
 
 }

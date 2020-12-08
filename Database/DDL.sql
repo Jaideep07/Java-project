@@ -460,7 +460,11 @@ insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 							 
 							 
 /*DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
-retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;	*/			 
+retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;			 
 							 
-DROP table Builder,Client;		 
-							 
+DROP table Builder,Client;	*/		 
+					
+SELECT * FROM Builder WHERE passcode=crypt('Atharv123',passcode);
+
+
+

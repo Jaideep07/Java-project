@@ -39,7 +39,7 @@ create table Builder (
 );
 
 
-insert into Builder values                         ('B1','Architect','Atharv','Sharma',
+insert into Builder values  ('B1','Architect','Atharv','Sharma',
 						   'Abids','Hyderabad','Telangana',500001,'M',
 						   80000.00,'B1','atharvsharma@gmail.com',9595959501,crypt('Atharv123',gen_salt('bf',4))),
 						   
@@ -109,16 +109,15 @@ insert into Retailer values('R1','Abhishek','Abids','Hyderabad','Telangana',5000
 create table Client_Emails (
 	id varchar(10),
 	email varchar(80),
-	password varchar(10),
 	primary key(id,email),
 	foreign key(id) references Client(id)
 );
 
-insert into Client_Emails values('C1','AbhinavReddy@gmail.com','C1abc'),
-								('C2','BhavithSharma@gmail.com','C2abc'),
-								('C3','HimanshuBhatt@gmail.com','C3abc'),
-								('C4','SubramaniamIyer@gmail.com','C4abc'),
-								('C5','ShivajiDeshpande@gmail.com','C5abc');
+insert into Client_Emails values('C1','AbhinavReddy@gmail.com'),
+								('C2','BhavithSharma@gmail.com'),
+								('C3','HimanshuBhatt@gmail.com'),
+								('C4','SubramaniamIyer@gmail.com'),
+								('C5','ShivajiDeshpande@gmail.com');
 								
 
 create table Client_phone_numbers (
@@ -464,7 +463,7 @@ retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;
 							 
 DROP table Builder,Client;	*/		 
 					
-SELECT * FROM Builder WHERE passcode=crypt('Atharv123',passcode);
-
+1) SELECT * FROM Builder,Groups WHERE passcode=crypt('Atharv123',passcode) AND Groups.manager_id='B1' AND id = 'B1'; /* manager login*/
+2) SELECT distinct A.id FROM Builder A, Builder B WHERE A.passcode=crypt('Bhasker123',A.passcode) AND A.id=B.supervisor_id AND A.id = 'B3';
 
 

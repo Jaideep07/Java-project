@@ -23,6 +23,12 @@ public class Driver {
 						 break;
 				case(2): ul.retailerLogin(usrname, password);
 						 break;
+				case(3): ul.builderLogin(usrname,password);
+						 break;
+				case(4): ul.managerLogin(usrname,password);
+						 break;
+				case(5): ul.supervisorLogin(usrname,password);
+						 break;
 			}
 		
 		}

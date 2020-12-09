@@ -1,3 +1,4 @@
+/*CREATE EXTENSION pgcrypto;*/
 create table Client (
 	id varchar(10),
 	fname varchar(20),
@@ -6,14 +7,18 @@ create table Client (
 	city varchar(20),
 	state varchar(20),
 	zip_code int,
+	passcode varchar(100),
 	primary key(id)
 );
+/*DROP Table Client;
+SELECT * from Client WHERE passcode=crypt('abhinav123',passcode);
+SELECT * FROM client;*/
 
-insert into Client values('C1','Abhinav','Reddy','Abids','Hyderabad','Telangana',500001),
-					     ('C2','Bhavith','Sharma','Janpath','New Delhi','Delhi',110001),
-					     ('C3','Himanshu','Bhatt','MG Road','Bangalore','Karnataka',560001),
-					     ('C4','Subramaniam','Iyer','Ranganathan Gardens','Chennai','Tamil Nadu',600040),
-					     ('C5','Shivaji','Deshpande','Peddar Road','Mumbai','Maharashtra',400026);
+insert into Client values('C1','Abhinav','Reddy','Abids','Hyderabad','Telangana',500001,crypt('abhinav123',gen_salt('bf',4))),
+					     ('C2','Bhavith','Sharma','Janpath','New Delhi','Delhi',110001,crypt('bhavith123',gen_salt('bf',4))),
+					     ('C3','Himanshu','Bhatt','MG Road','Bangalore','Karnataka',560001,crypt('himanshu123',gen_salt('bf',4))),
+					     ('C4','Subramaniam','Iyer','Ranganathan Gardens','Chennai','Tamil Nadu',600040,crypt('subramaniam123',gen_salt('bf',4))),
+					     ('C5','Shivaji','Deshpande','Peddar Road','Mumbai','Maharashtra',400026,crypt('shivaji123',gen_salt('bf',4)));
 						 
 create table Builder (
 	id varchar(10),
@@ -29,58 +34,59 @@ create table Builder (
 	supervisor_id varchar(10) references Builder(id),
 	email varchar(50),
 	phone bigint,
-	password varchar(10),
+	passcode varchar(100),
 	primary key(id)
 );
 
-insert into builder values('B1','Architect','Atharv','Sharma',
+
+insert into Builder values  ('B1','Architect','Atharv','Sharma',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   80000.00,'B1','atharvsharma@gmail.com',9595959501,'Atharv123'),
+						   80000.00,'B1','atharvsharma@gmail.com',9595959501,crypt('Atharv123',gen_salt('bf',4))),
 						   
 						   ('B2','Civil Engr','Arun','Varma',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   50000.00,'B1','arunvarma@gmail.com',9595959502,'Arun123'),
+						   50000.00,'B1','arunvarma@gmail.com',9595959502,crypt('Arun123',gen_salt('bf',4))),
 						   
 						   ('B3','Builder','Bhaskar','Reddy',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   110000.00,'B1','bhaskarreddy@gmail.com',9595959503,'Bhaskar123'),
+						   110000.00,'B1','bhaskarreddy@gmail.com',9595959503,crypt('Bhaskar123',gen_salt('bf',4))),
 						   
 						   ('B4','Architect','Bhavesh','Reddy',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   70000.00,'B1','bhaveshreddy@gmail.com',9595959504,'Bhavesh123'),
+						   70000.00,'B1','bhaveshreddy@gmail.com',9595959504,crypt('Bhavesh123',gen_salt('bf',4))),
 						   
 						   ('B5','Civil Engr','David','Muller',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   60000.00,'B5','davidmuller@gmail.com',9595959505,'David123'),
+						   60000.00,'B5','davidmuller@gmail.com',9595959505,crypt('David123',gen_salt('bf',4))),
 						   
 						   ('B6','Builder','Dharani','Prasad',
 						   'Abids','Hyderabad','Telangana',500001,'F',
-						   120000.00,'B5','dharaniprasad@gmail.com',9595959506,'Dharani123'),
+						   120000.00,'B5','dharaniprasad@gmail.com',9595959506,crypt('Dharani123',gen_salt('bf',4))),
 						   
 						   ('B7','Architect','Alekhya','Singh',
 						   'Abids','Hyderabad','Telangana',500001,'F',
-						   85000.00,'B5','alekhyasingh@gmail.com',9595959507,'Alekhya123'),
+						   85000.00,'B5','alekhyasingh@gmail.com',9595959507,crypt('Alekhya123',gen_salt('bf',4))),
 						   
 						   ('B8','Civil Engr','Preethi','Shingh',
 						   'Abids','Hyderabad','Telangana',500001,'F',
-						   45000.00,'B5','preethisingh@gmail.com',9595959508,'Preethi123'),
+						   45000.00,'B5','preethisingh@gmail.com',9595959508,crypt('Preethi123',gen_salt('bf',4))),
 						   
 						   ('B9','Builder','Rohan','Singh',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   110000.00,'B9','rohansingh@gmail.com',9595959509,'Rohan123'),
+						   110000.00,'B9','rohansingh@gmail.com',9595959509,crypt('Rohan123',gen_salt('bf',4))),
 						   
 						   ('B10','Architect','John','Abranam',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   80000.00,'B9','johnabraham@gmail.com',9595959510,'John123'),
+						   80000.00,'B9','johnabraham@gmail.com',9595959510,crypt('John123',gen_salt('bf',4))),
 						   
 						   ('B11','Civil Engr','Sanchi','Chopra',
 						   'Abids','Hyderabad','Telangana',500001,'F',
-						   65000.00,'B9','sanchichopra@gmail.com',9595959511,'Sanchi123'),
+						   65000.00,'B9','sanchichopra@gmail.com',9595959511,crypt('Sanchi123',gen_salt('bf',4))),
 						   
 						   ('B12','Builder','Pranav','Reddy',
 						   'Abids','Hyderabad','Telangana',500001,'M',
-						   100000.00,'B9','pranavreddy@gmail.com',9595959512,'Pranav123');
-
+						   100000.00,'B9','pranavreddy@gmail.com',9595959512,crypt('Pranav123',gen_salt('bf',4)));
+							
 create table Retailer (
 	id varchar(10),
 	name varchar(20),
@@ -89,30 +95,29 @@ create table Retailer (
 	state varchar(20),
 	Zip_code int,
 	email varchar(80),
-	password varchar(10),
+	passcode varchar(100),
 	service_rating numeric(2,1),
 	primary key(id)
 );
 
-insert into Retailer values('R1','Abhishek','Abids','Hyderabad','Telangana',500001,'abhishek@gmail.com','qwe@1244',4.5),
-					       ('R2','Bharghav','Janpath','New Delhi','Delhi',110001,'bharghav@gmail.com','trqw@1342',4.8),
-					       ('R3','Hemanth','MG Road','Bangalore','Karnataka',560001,'hemanth@gmail.com','fgyt$353',4.4),
-					       ('R4','Sharath','Ranganathan Gardens','Chennai','Tamil Nadu',600040,'sharath@gmail.com','asdfe&31',4.7),
-					       ('R5','Varun','Peddar Road','Mumbai','Maharashtra',400026,'varun@gmail.com','gyhd@tyhn',4.9);
+insert into Retailer values('R1','Abhishek','Abids','Hyderabad','Telangana',500001,'abhishek@gmail.com',crypt('qwe@1244',gen_salt('bf',4)),4.5),
+					       ('R2','Bharghav','Janpath','New Delhi','Delhi',110001,'bharghav@gmail.com',crypt('trqw@1342',gen_salt('bf',4)),4.8),
+					       ('R3','Hemanth','MG Road','Bangalore','Karnataka',560001,'hemanth@gmail.com',crypt('fgyt$353',gen_salt('bf',4)),4.4),
+					       ('R4','Sharath','Ranganathan Gardens','Chennai','Tamil Nadu',600040,'sharath@gmail.com',crypt('asdfe&31',gen_salt('bf',4)),4.7),
+					       ('R5','Varun','Peddar Road','Mumbai','Maharashtra',400026,'varun@gmail.com',crypt('gyhd@tyhn',gen_salt('bf',4)),4.9);
 						   
 create table Client_Emails (
 	id varchar(10),
 	email varchar(80),
-	password varchar(10),
 	primary key(id,email),
 	foreign key(id) references Client(id)
 );
 
-insert into Client_Emails values('C1','AbhinavReddy@gmail.com','C1abc'),
-								('C2','BhavithSharma@gmail.com','C2abc'),
-								('C3','HimanshuBhatt@gmail.com','C3abc'),
-								('C4','SubramaniamIyer@gmail.com','C4abc'),
-								('C5','ShivajiDeshpande@gmail.com','C5abc');
+insert into Client_Emails values('C1','AbhinavReddy@gmail.com'),
+								('C2','BhavithSharma@gmail.com'),
+								('C3','HimanshuBhatt@gmail.com'),
+								('C4','SubramaniamIyer@gmail.com'),
+								('C5','ShivajiDeshpande@gmail.com');
 								
 
 create table Client_phone_numbers (
@@ -453,8 +458,12 @@ insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 							 
 							 
 							 
+/*DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
+retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;			 
 							 
-							 
-							 
-							 
-							 
+DROP table Builder,Client;	*/		 
+					
+1) SELECT * FROM Builder,Groups WHERE passcode=crypt('Atharv123',passcode) AND Groups.manager_id='B1' AND id = 'B1'; /* manager login*/
+2) SELECT distinct A.id FROM Builder A, Builder B WHERE A.passcode=crypt('Bhasker123',A.passcode) AND A.id=B.supervisor_id AND A.id = 'B3';
+
+

@@ -1,5 +1,6 @@
 package threads.client;
-import database.*;
+
+import database.DBAccess;
 
 public class ClientEmail extends Thread{
 	

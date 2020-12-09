@@ -66,6 +66,7 @@ public class Client {
 		
 		System.out.println(c.getName());
 		System.out.println(c.getAddress());
+		in.close();
 		
 	}
 

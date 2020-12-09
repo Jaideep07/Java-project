@@ -1,5 +1,5 @@
 .metadata/
-Java-source-code/bin/*
+Java-source-code/bin/
 Java-source-code/.project
 Java-source-code/.classpath
 Java-source-code/.settings/*

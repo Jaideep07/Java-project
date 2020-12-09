@@ -13,7 +13,7 @@ class loginUI{
 		JPanel log = new JPanel();
 		log.setBounds(310,190,400,350);
 		log.setBackground(new Color(102, 179, 255));
-		loginWindow.add(log);
+		
 		
 		JLabel CMS = new JLabel("Construction Company Managment System");
 		CMS.setFont(new Font("Times New Roman", Font.ITALIC, 20));
@@ -26,20 +26,21 @@ class loginUI{
 		log.add(WEL);
 		
 		JLabel userID = new JLabel("USERID: ");
-		userID.setBounds(300,100,400,300);
+		userID.setBounds(300,200,400,300);
 		
 		log.add(userID);
 		
 		JLabel password = new JLabel("Password: ");
+		password.setBounds(330,800,400,300);
 		
 		password.setForeground(Color.DARK_GRAY);
 		log.add(password);
-		
+		loginWindow.add(log);
 		background.setBounds(0,0,1024,1024);
 		loginWindow.add(background);
 		loginWindow.setSize(1024,1024);
 		
-		
+		log.setLayout(null);
 		
 		loginWindow.setLayout(null);
 		loginWindow.setVisible(true);

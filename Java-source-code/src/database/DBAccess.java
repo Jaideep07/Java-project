@@ -17,7 +17,7 @@ public class DBAccess {
 		try {
 		
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","postgres");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
 		}
 		catch(SQLException e1)
 		{
@@ -324,6 +324,8 @@ public class DBAccess {
 		}
 		
 	}
+	
+	
 	public boolean checkExistingRetailer(String n, String street,String city,String state,int zip,String mail)
 	{
 		Connection c = connect();
@@ -399,52 +401,23 @@ public class DBAccess {
 		
 	}
 
-	public double getBuilderSalary(String bId) {
-		// TODO Auto-generated method stub
-		Connection c=connect();
-		double sal=0;
-		try
-		{
-			PreparedStatement s=c.prepareStatement("select salary from Builder where id=?;");
-			s.setString(1, bId);
-			ResultSet rs=s.executeQuery();
-	
-			while(rs.next())
-			{
-				sal=rs.getInt(1);
-			}
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-			System.err.println(e.getClass().getName()+": "+e.getMessage());
-			System.exit(0);
-		}
-		System.out.println(sal); // gui part
-		return sal;
-	}
 
 	public void viewRetailerOrders(String rId) {
 		// TODO Auto-generated method stub
 		Connection c=connect();
-		String data[][]=new String[10][5];
+		String orderDetail[][]=new String[10][5];
 		int i=0;
 		try
 		{
 			PreparedStatement s=c.prepareStatement("select site_id,material_model,material_name from Supplies where retailer_id=?;");
 			s.setString(1, rId);
 			ResultSet rs=s.executeQuery();
-			String s_id;
-			String model;
-			String name;
+
 			while(rs.next())
 			{
-				s_id=rs.getString(1);
-				model=rs.getString(2);
-				name=rs.getString(3);
-				data[i][0]=s_id;
-				data[i][1]=model;
-				data[i][2]=name;
+				orderDetail[i][0]=rs.getString(1);
+				orderDetail[i][1]=rs.getString(2);
+				orderDetail[i][2]=rs.getString(3);
 				i++;
 			}
 		}
@@ -455,6 +428,126 @@ public class DBAccess {
 			System.exit(0);
 		}
 		//return data for gui part
+		
+	}
+	
+	public String[] getBuilderDetails(String Bid)
+	{
+		Connection c=connect();
+		String Details[]=new String[4];
+		try
+		{
+			PreparedStatement s=c.prepareStatement("select fname,lname,email,street_name,city,state,zip_code,gender from Builder where id=?;");
+			s.setString(1, Bid);
+			ResultSet rs=s.executeQuery();
+
+			while(rs.next())
+			{
+				Details[0]=rs.getString("fname")+' '+rs.getString("lname");
+				Details[1]=rs.getString("email");
+				Details[2] = rs.getString("street_name")+ ", " +rs.getString("city")+ ", "
+						+rs.getString("state")+ ", " + String.valueOf(rs.getInt("zip_code"));
+				Details[3] = rs.getString("gender");
+			
+			}
+			return(Details);
+		}
+		catch(SQLException e)
+		{
+			
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(Details);
+		}
+	}
+	
+	public double getBuilderSalary(String Bid)
+	{
+		Connection c=connect();
+		double salary = 0;
+		try
+		{
+			PreparedStatement s=c.prepareStatement("select salary from Builder where id=?;");
+			s.setString(1, Bid);
+			ResultSet rs=s.executeQuery();
+
+			while(rs.next())
+			{
+				salary=rs.getDouble("salary");
+			}
+			return(salary);
+		}
+		catch(SQLException e)
+		{
+			
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(salary);
+		}
+		
+	}
+	
+	public void updateProjectStatus(String Pnum, double status,String Bid)
+	{
+		Connection c=connect();
+		try
+		{
+			PreparedStatement st=c.prepareStatement("UPDATE Works_on SET completion_status=? where builder_id=? AND project_no=?;");
+			st.setString(1, String.valueOf(status));
+			st.setString(2, Bid);
+			st.setString(3, Pnum);
+			st.executeQuery();
+			c.commit();
+			st.close();
+			c.close();
+			
+		}
+		catch(SQLException e)
+		{
+			
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+	}
+	
+	public String[][] getProjectStatus(String Cid)
+	{
+		
+		Connection c=connect();
+		String Status[][] = new String[10][5]; 
+		int i=0;
+		try
+		{
+			PreparedStatement st=c.prepareStatement("SELECT TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
+			st.setString(1, Cid);
+			ResultSet re = st.executeQuery();
+			while(re.next())
+			{
+				Status[i][0] = re.getString(0);
+				Status[i][1] = re.getString(1);
+				Status[i][2] = re.getString(2);
+				Status[i][3] = re.getString(3);
+				Status[i][4] = re.getString(4);
+				Status[i][5] = re.getString(5);
+				i++;
+			}
+			c.commit();
+			st.close();
+			c.close();
+			return(Status);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(Status);
+		}
 		
 	}
 

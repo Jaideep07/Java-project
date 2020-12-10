@@ -33,9 +33,9 @@ public class Retailer {
 		db.addRetailerMaterials(retailerId,m_name,model,type,manufacturer);
 	}
 	
-	void viewOrders()
+	void viewOrders(String rId)
 	{
-		
+		db.viewRetailerOrders(rId);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

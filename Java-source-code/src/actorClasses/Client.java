@@ -1,6 +1,7 @@
 package actorClasses;
 
 import threads.client.*;
+import database.*;
 import java.util.Scanner;
 
 public class Client {
@@ -10,6 +11,7 @@ public class Client {
 	protected String[] email;
 	protected long[] phoneNo;
 	protected String address;
+	DBAccess db = new DBAccess();
 	
 	Client()
 	{
@@ -57,6 +59,13 @@ public class Client {
 	{
 		return(address);
 	}
+	
+	public String[][] trackProjectStatus()
+	{
+		String Status[][] = db.getProjectStatus(clientId);
+		return(Status);
+	}
+	
 	
 	public static void main(String[] args)
 	{

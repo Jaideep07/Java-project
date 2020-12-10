@@ -190,17 +190,19 @@ create table Project (
 	end_date date,
 	tenure int,
 	group_number varchar(10),
+	completion_status varchar(5),
 	primary key(number),
 	foreign key(group_number) references Groups(number)
 );
 
-insert into Project values('P1','Project1','2018-05-05','2018-06-05','2020-01-05',2,'G1'),
-						  ('P2','Project2','2016-05-15','2016-06-15','2021-02-10',2,'G2'),
-						  ('P3','Project2','2019-05-25','2019-06-25','2022-02-15',2,'G3'),
-						  ('P4','Project2','2018-05-05','2018-06-05','2020-04-20',2,'G4'),
-						  ('P5','Project2','2016-05-15','2016-06-15','2021-05-25',2,'G5'),
-						  ('P6','Project2','2019-05-25','2019-06-25','2022-06-30',2,'G6'),
-						  ('P7','Project2','2019-06-27','2019-07-25','2022-07-25',2,'G6');
+
+insert into Project values('P1','Project1','2018-05-05','2018-06-05','2020-01-05',2,'G1','100%'),
+						  ('P2','Project2','2016-05-15','2016-06-15','2021-02-10',2,'G2','90%'),
+						  ('P3','Project3','2019-05-25','2019-06-25','2022-02-15',2,'G3','55.5%'),
+						  ('P4','Project4','2018-05-05','2018-06-05','2020-04-20',2,'G4','100%'),
+						  ('P5','Project5','2016-05-15','2016-06-15','2021-05-25',2,'G5','85.5%'),
+						  ('P6','Project6','2019-05-25','2019-06-25','2022-06-30',2,'G6','50.5%'),
+						  ('P7','Project7','2019-06-27','2019-07-25','2022-07-25',2,'G6','56.6%');
 						  
 create table Site (
 	id varchar(10),
@@ -367,31 +369,32 @@ create table Works_on (
 	builder_id varchar(10),
 	project_no varchar(10),
 	hours int,
+	completion_status varchar(5),
 	primary key(builder_id,project_no),
 	foreign key(builder_id) references Builder(id),
 	foreign key(project_no) references Project(number)
 );
 
-insert into Works_on values('B1','P1',5),
-						   ('B2','P1',6),
-						   ('B3','P1',7),
-						   ('B4','P2',5),
-						   ('B5','P2',6),
-						   ('B6','P2',7),
-						   ('B7','P3',5),
-						   ('B8','P3',6),
-						   ('B9','P3',7),
-						   ('B10','P4',5),
-						   ('B11','P4',6),
-						   ('B12','P4',7),
-						   ('B1','P5',5),
-						   ('B2','P5',6),
-						   ('B3','P5',7),
-						   ('B4','P5',8),
-						   ('B5','P6',5),
-						   ('B6','P6',6),
-						   ('B7','P6',7),
-						   ('B8','P6',8);
+insert into Works_on values('B1','P1',5,'100%'),
+						   ('B2','P1',6,'100%'),
+						   ('B3','P1',7,'100%'),
+						   ('B4','P2',5,'60%'),
+						   ('B5','P2',6,'100%'),
+						   ('B6','P2',7,'90%'),
+						   ('B7','P3',5,'60%'),
+						   ('B8','P3',6,'63%'),
+						   ('B9','P3',7,'32%'),
+						   ('B10','P4',5,'100%'),
+						   ('B11','P4',6,'100'),
+						   ('B12','P4',7,'100%'),
+						   ('B1','P5',5,'68.5%'),
+						   ('B2','P5',6,'90%'),
+						   ('B3','P5',7,'76%'),
+						   ('B4','P5',8,'85.5%'),
+						   ('B5','P6',5,'76.6%'),
+						   ('B6','P6',6,'58.5%'),
+						   ('B7','P6',7,'63.5%'),
+						   ('B8','P6',8,'43.5%');
 
 create table Subcontracts (
 	project_number varchar(10),
@@ -456,14 +459,16 @@ insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 							 
 							 
 							 
-							 
+	SELECT * FRom Client;						 
 							 
 /*DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
 retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;			 
 							 
-DROP table Builder,Client;	*/		 
+DROP table Builder,Client;			 
 					
 1) SELECT * FROM Builder,Groups WHERE passcode=crypt('Atharv123',passcode) AND Groups.manager_id='B1' AND id = 'B1'; /* manager login*/
 2) SELECT distinct A.id FROM Builder A, Builder B WHERE A.passcode=crypt('Bhasker123',A.passcode) AND A.id=B.supervisor_id AND A.id = 'B3';
+*/
+
 
 

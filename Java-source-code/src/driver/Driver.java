@@ -3,8 +3,14 @@ package driver;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-class loginUI{
+class loginUI implements ActionListener{
+	JComboBox select = null;
+	JTextField id = null;
+	JPasswordField code = null;
+	JLabel message = null;
+	
 	loginUI(){
 		JFrame loginWindow = new JFrame("User Login");
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
@@ -32,8 +38,8 @@ class loginUI{
 		loginType.setBounds(90,90,100,20);
 		log.add(loginType);
 		
-	    String type[] = { "None","Manager","Retailer","Builder","Customer","Supervisor"};
-	    JComboBox select = new JComboBox(type);
+	    String type[] = { "None","Manager","Retailer","Builder","Client","Supervisor"};
+	    select = new JComboBox(type);
 	    select.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 	    select.setBounds(200,90,100,22);
 	    log.add(select);
@@ -43,7 +49,7 @@ class loginUI{
 		userID.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		log.add(userID);
 		
-		JTextField id = new JTextField("");
+		id = new JTextField("");
 	    id.setBounds(200,130,100,20);
 	    log.add(id);
 	    
@@ -52,7 +58,7 @@ class loginUI{
 		password.setFont(new Font("Times New Roman", Font.BOLD, 16));
 		log.add(password);
 		
-		JPasswordField code = new JPasswordField("");
+		code = new JPasswordField("");
 		code.setBounds(200,170,100,20);
 		log.add(code);
 		
@@ -61,6 +67,12 @@ class loginUI{
 		enter.setBounds(150,220,100,20);
 		log.add(enter);
 		
+		message = new JLabel("");
+		message.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		message.setBounds(100,250,400,20);
+		message.setForeground(Color.red);
+		log.add(message);
+		
 		background.setBounds(0,0,1024,1024);
 		loginWindow.add(background);
 		loginWindow.setSize(1024,1024);
@@ -68,6 +80,29 @@ class loginUI{
 		log.setLayout(null);
 		loginWindow.setLayout(null);
 		loginWindow.setVisible(true);
+		enter.addActionListener(this);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		String type = (String) select.getSelectedItem();
+		String username = id.getText();
+		String password = String.valueOf(code.getPassword());
+		UserLogin ul = new UserLogin();
+		switch(type)
+		{
+			case("Client"): message.setText(ul.clientLogin(username,password));
+					 break;
+			case("Retailer"): message.setText(ul.retailerLogin(username, password));
+					 break;
+			case("Builder"): message.setText(ul.builderLogin(username,password));
+					 break;
+			case("Manager"): message.setText(ul.managerLogin(username,password));
+					 break;
+			case("Supervisor"): message.setText(ul.supervisorLogin(username,password));
+					 break;
+			case("None"): message.setText("Please select a LOGIN TYPE!");
+			 		 break;		 
+		}
 	}
 }
 public class Driver {
@@ -75,35 +110,6 @@ public class Driver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new loginUI();
-		Scanner in = new Scanner(System.in);
-		UserLogin ul = new UserLogin();
-		
-		//String type = in.next();
-		String usrname = in.next();
-		String password = in.next();
-		
-		while(true)
-		{
-			int ch = in.nextInt(); // ch should be taken from the drop down menu
-			switch(ch)
-			{
-				case(1): ul.clientLogin(usrname,password);
-						 break;
-				case(2): ul.retailerLogin(usrname, password);
-						 break;
-				case(3): ul.builderLogin(usrname,password);
-						 break;
-				case(4): ul.managerLogin(usrname,password);
-						 break;
-				case(5): ul.supervisorLogin(usrname,password);
-						 break;
-			}
-		
-		}
-		
-		
-		
-
 	}
 
 }

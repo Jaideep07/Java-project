@@ -12,12 +12,12 @@ public class Builder {
 	public String email;
 	DBAccess db = new DBAccess();
 
-	Builder()
+	public Builder()
 	{
 		id="";
 	}
 
-	Builder(String id)
+	public Builder(String id)
 	{
 		String Details[] = db.getBuilderDetails(id);
 		this.id = id;

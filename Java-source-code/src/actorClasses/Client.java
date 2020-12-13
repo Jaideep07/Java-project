@@ -13,7 +13,7 @@ public class Client {
 	private String password;
 	DBAccess db = new DBAccess();
 	
-	Client()
+	public Client()
 	{
 		clientId="";
 	}

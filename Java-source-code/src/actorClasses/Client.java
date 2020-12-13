@@ -18,7 +18,7 @@ public class Client {
 		clientId="";
 	}
 	
-	Client(String cId)
+	public Client(String cId)
 	{
 		clientId = cId;
 		address = db.searchClientAddress(clientId);

@@ -18,7 +18,7 @@ public class DBAccess {
 		try {
 		
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","Wildwest");
 		}
 		catch(SQLException e1)
 		{
@@ -523,7 +523,7 @@ public class DBAccess {
 		int i=0;
 		try
 		{
-			PreparedStatement st=c.prepareStatement("SELECT id,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
+			PreparedStatement st=c.prepareStatement("SELECT Site.id,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
 			st.setString(1, Cid);
 			ResultSet re = st.executeQuery();
 			while(re.next())
@@ -536,7 +536,6 @@ public class DBAccess {
 				Status[i][5] = re.getString(6);
 				i++;
 			}
-			c.commit();
 			st.close();
 			c.close();
 			return(Status);

@@ -25,7 +25,7 @@ public class Retailer {
 
 	void retailerRegistration(String n,String st,String c,String s,int z,String mail)
 	{
-		db.addRetailer(n,st,c,s,z,mail);
+		//db.addRetailer(n,st,c,s,z,mail);
 	}
 	
 	void addMaterialDetails(String m_name,String model,String type,String manufacturer)

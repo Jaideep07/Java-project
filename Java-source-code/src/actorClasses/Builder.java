@@ -20,6 +20,7 @@ public class Builder {
 	Builder(String id)
 	{
 		String Details[] = db.getBuilderDetails(id);
+		this.id = id;
 		this.salary = db.getBuilderSalary(id);
 		this.name = Details[0];
 		this.email = Details[1];
@@ -42,10 +43,18 @@ public class Builder {
 	{
 		db.updateProjectStatus(PNumber, status, id);
 	}
+	
+	public String[][] getProjects()
+	{
+		String Projects[][] = db.getBuilderProjects(this.id);
+		return(Projects);
+		
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Builder b=new Builder("B1");
-		
+	
 	}
 
 }

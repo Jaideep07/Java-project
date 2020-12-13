@@ -18,7 +18,7 @@ public class DBAccess {
 		try {
 
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","postgres");
 		}
 		catch(SQLException e1)
 		{

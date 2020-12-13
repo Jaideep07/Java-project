@@ -17,6 +17,7 @@ public class AcceptingAuthorityGui implements ActionListener {
 	JTextField tf4=null;
 	JButton b1= new JButton("Assigns");
 	JButton b2= new JButton("Assigns");
+	AcceptingAuthority a=new AcceptingAuthority();
 	AcceptingAuthorityGui()
 	{
 		authorityWindow = new JFrame();
@@ -41,10 +42,10 @@ public class AcceptingAuthorityGui implements ActionListener {
         l3.setFont(new Font("Times New Roman", Font.BOLD, 18));
         l4.setFont(new Font("Times New Roman", Font.BOLD, 18));
         
-        String data1[][]= {{"1","2"},{"3","3"}}; 		// add code part and return
-        String column1[]= {"h1","h2"};      			// add code part and return
-        String data2[][]={{"1","2"},{"3","3"}};; 		// add code part and return
-        String column2[]={"h1","h2"};    			   	// add code part and return
+        String data1[][]= a.getRawMaterials(); 		// add code part and return
+        String column1[]= {"Material Name","Material Model","Material Type","Manufacuter"};      			// add code part and return
+        String data2[][]= a.showUnallocatedMaterials(); 		// add code part and return
+        String column2[]= {};    			   	// add code part and return
         
         JTable t1=new JTable(data1,column1);
         JTable t2=new JTable(data2,column2);
@@ -81,6 +82,9 @@ public class AcceptingAuthorityGui implements ActionListener {
 		JLabel lb6=new JLabel("Subcontract Id:");
 		JLabel lb7=new JLabel("To");
 		JLabel lb8=new JLabel("Site Id:");
+		
+		JLabel lb9=new JLabel("Material Model");
+		JLabel lb10=new JLabel("Material Name");
 		
 		tf1=new JTextField("");
 		tf2=new JTextField("");
@@ -165,11 +169,11 @@ public class AcceptingAuthorityGui implements ActionListener {
 		}
 		else if(e.getSource()==b1)
 		{
-			// add function in DBAccess
+			
 		}
 		else if(e.getSource()==b2)
 		{
-			// add function in DBAccess
+			
 		}
 		
 	}

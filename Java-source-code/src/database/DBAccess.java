@@ -18,7 +18,7 @@ public class DBAccess {
 		try {
 		
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","postgres");
 		}
 		catch(SQLException e1)
 		{
@@ -490,7 +490,7 @@ public class DBAccess {
 		
 	}
 	
-	public void updateProjectStatus(String Pnum, double status,String Bid)
+	public void updateProjectStatus(String Pnum, String status,String Bid)
 	{
 		Connection c=connect();
 		try
@@ -499,7 +499,7 @@ public class DBAccess {
 			st.setString(1, String.valueOf(status));
 			st.setString(2, Bid);
 			st.setString(3, Pnum);
-			st.executeQuery();
+			st.executeUpdate();
 			c.commit();
 			st.close();
 			c.close();

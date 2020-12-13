@@ -101,7 +101,7 @@ class loginUI implements ActionListener{
 			case("Supervisor"): message.setText(ul.supervisorLogin(username,password));
 					 break;
 			case("None"): message.setText("Please select a LOGIN TYPE!");
-			 		 break;		 
+			 		 break;	 
 		}
 	}
 }

@@ -918,7 +918,7 @@ public class DBAccess {
 	public String[][] builderPerformanceTracking(String mId)
 	{
 		Connection c=connect();
-		String builders[][] = new String[15][3];
+		String performance[][] = new String[15][3];
 		try
 		{
 			String groupNo="";
@@ -930,18 +930,18 @@ public class DBAccess {
 				groupNo = re.getString("number");
 			}
 
-			PreparedStatement st = c.prepareStatement("SELECT Works_on.builder_id, Works_on.project_no,Works_on.completion_status FROM Works_on,Works_in WHERE Works_on.builder_id = Works_in.builder_id AND Works_in.group_number = ?;");
+			PreparedStatement st = c.prepareStatement("SELECT Works_in.builder_id, COUNT(project_no),SUM(hours) FROM Works_on,Works_in WHERE Works_in.builder_id=Works_on.builder_id AND Works_in.group_number=? GROUP BY(Works_in.builder_id) ORDER BY COUNT(project_no) DESC, SUM(hours) DESC;");
 			st.setString(1, groupNo);
 			ResultSet r = st.executeQuery();
 			int i=0;
 			while(r.next())
 			{
-				builders[i][0] = r.getString(1);
-				builders[i][1] = r.getString(2);
-				builders[i][2] = r.getString(3);
+				performance[i][0] = r.getString(1);
+				performance[i][1] = r.getString(2);
+				performance[i][2] = r.getString(3);
 				i++;
 			}
-			return(builders);
+			return(performance);
 
 		}
 		catch(SQLException e)
@@ -949,8 +949,31 @@ public class DBAccess {
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
-			return(builders);
+			return(performance);
 		}
 
+	}
+	
+	public void giveSalaryBonus(String bId, double percent)
+	{
+		Connection c=connect();
+		try
+		{
+			PreparedStatement st=c.prepareStatement("UPDATE Builder SET salary=salary*? where id=?;");
+			st.setDouble(1, percent);
+			st.setString(2, bId);
+			st.executeUpdate();
+			st.close();
+			c.close();
+
+		}
+		catch(SQLException e)
+		{
+
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
 	}
 }

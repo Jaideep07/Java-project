@@ -523,7 +523,7 @@ public class DBAccess {
 		int i=0;
 		try
 		{
-			PreparedStatement st=c.prepareStatement("SELECT id,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
+			PreparedStatement st=c.prepareStatement("SELECT Site.id,verification_status,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
 			st.setString(1, Cid);
 			ResultSet re = st.executeQuery();
 			while(re.next())
@@ -534,6 +534,7 @@ public class DBAccess {
 				Status[i][3] = re.getString(4);
 				Status[i][4] = re.getString(5);
 				Status[i][5] = re.getString(6);
+				Status[i][6] = re.getString(7);
 				i++;
 			}
 			c.commit();
@@ -638,6 +639,8 @@ public class DBAccess {
 			
 
 			st.close();
+			st1.close();
+			st2.close();
 			c.close();
 			return(cId);
 			
@@ -689,5 +692,141 @@ public class DBAccess {
 		}
 		
 	}	
+	
+	public void allocateProject(String Pname, String assignedDate, String startDate, String endDate, String tenure,String mId, String siteId)
+	{
+		Connection c=connect();
+
+		try
+		{
+			String groupNo="";
+			PreparedStatement st1 = c.prepareStatement("SELECT number FROM Groups WHERE manager_id = ?");
+			st1.setString(1,mId);
+			ResultSet re = st1.executeQuery();
+			while(re.next())
+			{
+				groupNo = re.getString("number");
+			}
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT count(*) FROM Project");
+			int l=0;
+			while(r.next())
+			{
+				l=r.getInt(1)+1;
+			}
+			
+			String pNo = "P"+String.valueOf(l);
+			
+			PreparedStatement st2 = c.prepareStatement("INSERT INTO Project VALUES(?,?,?,?,?,?,?,?);");
+			st2.setString(1, pNo);
+			st2.setString(2, Pname);
+			st2.setDate(3, Date.valueOf(assignedDate));
+			st2.setDate(4, Date.valueOf(startDate));
+			st2.setDate(5, Date.valueOf(endDate));
+			st2.setInt(6, Integer.parseInt(tenure));
+			st2.setString(7, groupNo);
+			st2.setString(8, "0%");
+			st2.executeUpdate();
+			
+			PreparedStatement st = c.prepareStatement("UPDATE Site SET project_no=? WHERE id=? AND project_no=null AND verification_status='verified' ;");
+			st.setString(1, pNo);
+			st.setString(2, siteId);
+			st.executeUpdate();
+			
+			st.close();
+			s.close();
+			st2.close();
+			c.close();
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+		
+	}
+	
+	public String[][] viewUnallocatedSites()
+	{
+		Connection c=connect();
+		String Sites[][] = new String[10][6]; 
+		int i=0;
+		try
+		{
+			Statement st=c.createStatement();
+			ResultSet re = st.executeQuery("SELECT id,city,state,site_area_sqyards,site_terrain,soil_type FROM Project,Works_on,Site WHERE verification_status='verified' AND project_no=null;");
+			while(re.next())
+			{
+				Sites[i][0] = re.getString(1);
+				Sites[i][1] = re.getString(2);
+				Sites[i][2] = re.getString(3);
+				Sites[i][3] = re.getString(4);
+				Sites[i][4] = re.getString(5);
+				Sites[i][5] = re.getString(6);
+				i++;
+			}
+			st.close();
+			c.close();
+			return(Sites);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(Sites);
+		}
+		
+		
+	}
+	
+	public void assignProject(String pId, String bId)
+	{
+		Connection c=connect();
+		try
+		{
+			PreparedStatement st=c.prepareStatement("INSERT INTO Works_on VALUES(?,?,5,'0%');");
+			st.setString(1, bId);
+			st.setString(2, pId);
+			st.executeQuery();
+			c.commit();
+			st.close();
+			c.close();
+			
+		}
+		catch(SQLException e)
+		{
+			
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+	}
+	
+	public String[][] viewProjectsForAssigning(String mId)
+	{
+		{
+			Connection c=connect();
+
+			try
+			{
+				String groupNo="";
+				PreparedStatement st1 = c.prepareStatement("SELECT number FROM Groups WHERE manager_id = ?");
+				st1.setString(1,mId);
+				ResultSet re = st1.executeQuery();
+				while(re.next())
+				{
+					groupNo = re.getString("number");
+				}
+				
+				
+		
+		
+	}
 
 }

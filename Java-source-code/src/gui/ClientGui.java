@@ -7,6 +7,7 @@ import java.awt.event.*;
 import actorClasses.Client;
 
 class siteRegistration implements ActionListener{
+	String userid = null;
 	JButton exitS = null;
 	JButton registerS = null;
 	JPanel sitePane = null;
@@ -35,7 +36,8 @@ class siteRegistration implements ActionListener{
 	JLabel dateOfPurchase = null;
 	JTextField dateOfPurchaseT = null;
 	
-	public siteRegistration(){
+	public siteRegistration(String username){
+		userid = username;
 		siteRegis = new JFrame("Site Registration");
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
 		JLabel background = new JLabel("",img,JLabel.CENTER);
@@ -207,7 +209,10 @@ class siteRegistration implements ActionListener{
 			siteRegis.dispose();
 		}
 		else if(e.getSource().equals(registerS)) {
-			
+			Client cl = new Client(userid);
+			cl.enterSiteInfo(streetNameT.getText(), cityT.getText(), stateT.getText(), zipCodeT.getText(), areaT.getText(), terrinTypeT.getText(), soilTypeT.getSelectedText(), userid, dateOfPurchaseT.getText(), ownerTypeT.getText());
+			JFrame frame= new JFrame("Message");
+			JOptionPane.showMessageDialog(frame, "Registered Successfully!");
 		}
 	}
 }
@@ -216,11 +221,14 @@ public class ClientGui implements ActionListener {
 	JFrame clientWindow = null;
 	JButton exit = null;
 	JButton addSite = null;
+	public String userID = null;
+	
 	public ClientGui(String username){
 		clientWindow = new JFrame("Client");
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
 		JLabel background = new JLabel("",img,JLabel.CENTER);
 		
+		userID = username;
 		Client c = new Client(username);
 		
 		JLabel user = new JLabel("Welcome! "+c.getName());
@@ -280,7 +288,7 @@ public class ClientGui implements ActionListener {
 			clientWindow.dispose();
 		}
 		else if(e.getSource().equals(addSite)){
-			new siteRegistration();
+			new siteRegistration(userID);
 		}
 	}
 

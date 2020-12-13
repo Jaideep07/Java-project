@@ -12,9 +12,8 @@ public class Client {
 	protected String address;
 	private String password;
 	DBAccess db = new DBAccess();
-  
-	public Client()
 
+	public Client()
 	{
 		clientId="";
 	}
@@ -60,10 +59,10 @@ public class Client {
 
 	}
 
-	public void clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password, String email[], long phoneNo[])
+	public String clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password, String email[], long phoneNo[])
 	{
 		clientId = db.clientRegistration(fname,lname,street,city,state,zipcode,password,email,phoneNo);
-
+		return clientId;
 	}
 
 	public static void main(String[] args)

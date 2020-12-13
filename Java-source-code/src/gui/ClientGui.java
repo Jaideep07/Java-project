@@ -6,6 +6,273 @@ import java.awt.event.*;
 
 import actorClasses.Client;
 
+class registerClient implements ActionListener{
+	String userid = null;
+	JButton exitC = null;
+	JButton registerC = null;
+	JPanel CPane = null;
+	JFrame CRegis = null;
+	JLabel clientDetails = null;
+	JLabel noteC = null;
+	
+	JLabel streetName = null;
+	JTextField streetNameC = null;
+	JLabel city = null;
+	JTextField cityC = null;
+	JLabel state = null;
+	JTextField stateC = null;
+	JLabel zipCode = null;
+	JTextField zipCodeC = null;
+	
+	JLabel fname = null;
+	JTextField fnameC = null;
+	JLabel lname = null;
+	JTextField lnameC = null;
+	JLabel passcode = null;
+	JPasswordField passcodeC = null;
+	
+	JLabel phone = null;
+	JTextField phoneC = null;
+	JLabel email = null;
+	JTextField emailC = null;
+	JLabel msg = null; 
+	
+	public registerClient(){
+		CRegis = new JFrame("Client Registration");
+		ImageIcon img = new ImageIcon("src/Construction.jpg");
+		JLabel background = new JLabel("",img,JLabel.CENTER);
+		
+		CPane = new JPanel();
+		CPane.setBounds(80,40,545,410);
+		CPane.setBackground(new Color(102, 179, 255));
+		CRegis.add(CPane);
+		
+		JLabel header = new JLabel("Client Registration");
+		header.setBounds(25,9,270,25);
+		header.setForeground(Color.red);
+		header.setFont(new Font("Times New Roman", Font.BOLD, 25));
+		CRegis.add(header);
+		
+		clientDetails = new JLabel("Client Details");
+		clientDetails.setBounds(210,10,200,25);
+		clientDetails.setForeground(Color.DARK_GRAY);
+		clientDetails.setFont(new Font("Times New Roman", Font.BOLD, 25));
+		CPane.add(clientDetails);
+		
+		streetName = new JLabel("Street name:");
+		streetName.setBounds(75,40,200,25);
+		streetName.setForeground(Color.GRAY);
+		streetName.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(streetName);
+		
+		streetNameC = new JTextField("");
+		streetNameC.setBounds(275,42,200,20);
+		streetNameC.setForeground(Color.GRAY);
+		streetNameC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(streetNameC);
+		
+		city = new JLabel("City:");
+		city.setBounds(75,70,200,25);
+		city.setForeground(Color.GRAY);
+		city.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(city);
+		
+		cityC = new JTextField("");
+		cityC.setBounds(275,72,200,20);
+		cityC.setForeground(Color.GRAY);
+		cityC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(cityC);
+		
+		state = new JLabel("State:");
+		state.setBounds(75,100,200,25);
+		state.setForeground(Color.GRAY);
+		state.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(state);
+		
+		stateC = new JTextField("");
+		stateC.setBounds(275,102,200,20);
+		stateC.setForeground(Color.GRAY);
+		stateC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(stateC);
+		
+		zipCode = new JLabel("Zip code:");
+		zipCode.setBounds(75,130,200,25);
+		zipCode.setForeground(Color.GRAY);
+		zipCode.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(zipCode);
+		
+		zipCodeC = new JTextField("");
+		zipCodeC.setBounds(275,132,200,20);
+		zipCodeC.setForeground(Color.GRAY);
+		zipCodeC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(zipCodeC);
+		
+		fname = new JLabel("First name:");
+		fname.setBounds(75,160,200,25);
+		fname.setForeground(Color.GRAY);
+		fname.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(fname);
+		
+		fnameC = new JTextField("");
+		fnameC.setBounds(275,162,200,20);
+		fnameC.setForeground(Color.GRAY);
+		fnameC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(fnameC);
+		
+		lname = new JLabel("Last name:");
+		lname.setBounds(75,190,200,25);
+		lname.setForeground(Color.GRAY);
+		lname.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(lname);
+		
+		lnameC = new JTextField("");
+		lnameC.setBounds(275,192,200,20);
+		lnameC.setForeground(Color.GRAY);
+		lnameC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(lnameC);
+		
+		passcode = new JLabel("Set password:");
+		passcode.setBounds(75,280,200,25);
+		passcode.setForeground(Color.GRAY);
+		passcode.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(passcode);
+		
+		passcodeC = new JPasswordField("");
+		passcodeC.setBounds(275,282,200,20);
+		passcodeC.setForeground(Color.GRAY);
+		passcodeC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(passcodeC);
+		
+		phone = new JLabel("Phone number:");
+		phone.setBounds(75,220,200,25);
+		phone.setForeground(Color.GRAY);
+		phone.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(phone);
+		
+		phoneC = new JTextField("");
+		phoneC.setBounds(275,222,200,20);
+		phoneC.setForeground(Color.GRAY);
+		phoneC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(phoneC);
+		
+		email = new JLabel("Email ID:");
+		email.setBounds(75,250,200,25);
+		email.setForeground(Color.GRAY);
+		email.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(email);
+		
+		emailC = new JTextField("");
+		emailC.setBounds(275,252,200,20);
+		emailC.setForeground(Color.GRAY);
+		emailC.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+		CPane.add(emailC);
+		
+		registerC = new JButton("Register!");
+		CPane.add(registerC);
+		registerC.setBounds(210, 340, 130, 35);
+		
+		noteC = new JLabel("**ClientID is generated as soon as you register.");
+		noteC.setBounds(150,380,300,20);
+		noteC.setForeground(Color.red);
+		noteC.setFont(new Font("Times New Roman", Font.ITALIC, 14));
+		CPane.add(noteC);
+		
+		exitC = new JButton("Exit");
+		exitC.setBounds(600,9,90,18);
+		exitC.setForeground(Color.red);
+		exitC.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		CRegis.add(exitC);
+		
+		msg = new JLabel("");
+		msg.setBounds(230,320,200,20);
+		msg.setForeground(Color.red);
+		msg.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		CPane.add(msg);
+		
+		background.setBounds(0,0,720,500);
+		CRegis.add(background);
+		CRegis.setSize(720,500);
+		
+		CPane.setLayout(null);
+		CRegis.setLayout(null);
+		CRegis.setVisible(true);
+		
+		streetNameC.addActionListener(this);
+		cityC.addActionListener(this);
+		stateC.addActionListener(this);
+		zipCodeC.addActionListener(this);
+		fnameC.addActionListener(this);
+		lnameC.addActionListener(this);
+		passcodeC.addActionListener(this);
+		phoneC.addActionListener(this);
+		emailC.addActionListener(this);
+		exitC.addActionListener(this);
+		registerC.addActionListener(this);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(exitC)) {
+			CRegis.dispose();
+		}
+		else if(e.getSource().equals(registerC)) {
+			Client c = new Client();
+			String[] s = new String[1];
+			s[0] = emailC.getText();
+			long[] l = new long[1];
+			l[0] = Long.parseLong(phoneC.getText());
+			String id = c.clientRegistration(fnameC.getText(), lnameC.getText(), streetNameC.getText(), cityC.getText(), stateC.getText(), zipCodeC.getText(), passcodeC.getText(), s, l);
+			msg.setText("Your Id is "+id);
+			JFrame frame= new JFrame("Message");
+			JOptionPane.showMessageDialog(frame, "Registered Successfully!");
+		}
+	}
+}
+
+class isClientRegistered implements ActionListener{
+	JFrame isCregistered = null;
+	JButton clRegis = null;
+	JButton cContinue = null;
+	public isClientRegistered(){
+		isCregistered = new JFrame("Have You Registered?");
+		
+		JLabel nClient = new JLabel("New Client?");
+		nClient.setBounds(85,9,200,25);
+		nClient.setForeground(Color.blue);
+		nClient.setFont(new Font("Times New Roman", Font.ITALIC, 20));
+		isCregistered.add(nClient);
+		
+		clRegis = new JButton("Register!");
+		clRegis.setBounds(80, 45, 120, 22);
+		isCregistered.add(clRegis);
+		
+		JLabel RClient = new JLabel("Already Registered?");
+		RClient.setBounds(55,85,200,25);
+		RClient.setForeground(Color.blue);
+		RClient.setFont(new Font("Times New Roman", Font.ITALIC, 20));
+		isCregistered.add(RClient);
+		
+		cContinue = new JButton("Continue");
+		cContinue.setBounds(80, 120, 120, 22);
+		isCregistered.add(cContinue);
+		
+		isCregistered.setSize(300,200);
+		isCregistered.setLayout(null);
+		isCregistered.setVisible(true);
+		
+		cContinue.addActionListener(this);
+		clRegis.addActionListener(this);
+	}
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(cContinue)) {
+			isCregistered.dispose();
+		}
+		else {
+			new registerClient();
+			isCregistered.dispose();
+		}
+	}
+}
+
 class siteRegistration implements ActionListener{
 	String userid = null;
 	JButton exitS = null;
@@ -222,6 +489,10 @@ public class ClientGui implements ActionListener {
 	JButton exit = null;
 	JButton addSite = null;
 	public String userID = null;
+	
+	public ClientGui() {
+		new isClientRegistered();
+	}
 	
 	public ClientGui(String username){
 		clientWindow = new JFrame("Client");

@@ -17,6 +17,7 @@ public class AcceptingAuthorityGui implements ActionListener {
 	JTextField tf4=null;
 	JButton b1= new JButton("Assigns");
 	JButton b2= new JButton("Assigns");
+	AcceptingAuthority AccAutho = new AcceptingAuthority();
 	AcceptingAuthorityGui()
 	{
 		authorityWindow = new JFrame();
@@ -101,7 +102,7 @@ public class AcceptingAuthorityGui implements ActionListener {
 		lb4.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
 		lb5.setBounds(600, 460, 100, 20);
-		lb6.setBounds(600, 490, 120, 20);
+		lb6.setBounds(600, 490, 150, 20);
 		lb7.setBounds(600, 520, 100, 20);
 		lb8.setBounds(600, 550, 100, 20);
 		lb5.setFont(new Font("Times New Roman", Font.BOLD, 15));

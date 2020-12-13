@@ -5,14 +5,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import gui.*;
+
 class loginUI implements ActionListener{
 	JComboBox select = null;
 	JTextField id = null;
 	JPasswordField code = null;
 	JLabel message = null;
+	JFrame loginWindow = null;
 	
 	loginUI(){
-		JFrame loginWindow = new JFrame("User Login");
+		loginWindow = new JFrame("User Login");
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
 		JLabel background = new JLabel("",img,JLabel.CENTER);
 		
@@ -80,28 +83,41 @@ class loginUI implements ActionListener{
 		log.setLayout(null);
 		loginWindow.setLayout(null);
 		loginWindow.setVisible(true);
+		select.addActionListener(this);
 		enter.addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		String type = (String) select.getSelectedItem();
-		String username = id.getText();
-		String password = String.valueOf(code.getPassword());
-		UserLogin ul = new UserLogin();
-		switch(type)
-		{
-			case("Client"): message.setText(ul.clientLogin(username,password));
-					 break;
-			case("Retailer"): message.setText(ul.retailerLogin(username, password));
-					 break;
-			case("Builder"): message.setText(ul.builderLogin(username,password));
-					 break;
-			case("Manager"): message.setText(ul.managerLogin(username,password));
-					 break;
-			case("Supervisor"): message.setText(ul.supervisorLogin(username,password));
-					 break;
-			case("None"): message.setText("Please select a LOGIN TYPE!");
-			 		 break;	 
+		if(type.equals("Client") && e.getSource() == select) {
+			System.out.println("Working");
+		}
+		else {
+			String username = id.getText();
+			String password = String.valueOf(code.getPassword());
+			UserLogin ul = new UserLogin();
+			switch(type)
+			{
+				case("Client"): if((ul.clientLogin(username,password)).equals("Success")) {
+										new ClientGui(username);
+										loginWindow.dispose();
+								}
+								else {
+										message.setText(ul.clientLogin(username,password));
+								}
+						 break;
+				case("Retailer"): message.setText(ul.retailerLogin(username, password));
+						 break;
+				case("Builder"): message.setText(ul.builderLogin(username,password));
+						 break;
+				case("Manager"): message.setText(ul.managerLogin(username,password));
+						 break;
+				case("Supervisor"): message.setText(ul.supervisorLogin(username,password));
+						 break;
+				case("None"): message.setText("Please select a LOGIN TYPE!");
+				 		 break;		 
+			}
+
 		}
 	}
 }
@@ -109,7 +125,8 @@ public class Driver {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new loginUI();
+		//new loginUI();
+		new ClientGui("C2");
 	}
 
 }

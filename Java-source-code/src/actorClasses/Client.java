@@ -12,13 +12,14 @@ public class Client {
 	protected String address;
 	private String password;
 	DBAccess db = new DBAccess();
-	
+  
 	public Client()
+
 	{
 		clientId="";
 	}
-	
-	Client(String cId)
+
+	public Client(String cId)
 	{
 		clientId = cId;
 		address = db.searchClientAddress(clientId);
@@ -26,17 +27,17 @@ public class Client {
 		name = db.searchClientName(clientId);
 		phoneNo = db.searchClientPhoneNo(clientId);
 	}
-	
+
 	public String getName()
 	{
 		return(name);
 	}
-	
+
 	public String getAddress()
 	{
 		return(address);
 	}
-	
+
 	public String getPassword()
 	{
 		return(password);
@@ -45,26 +46,26 @@ public class Client {
 	{
 		this.password = password;
 	}
-	
-	
+
+
 	public String[][] trackProjectStatus()
 	{
 		String Status[][] = db.getProjectStatus(clientId);
 		return(Status);
 	}
-	
+
 	public void enterSiteInfo(String street, String city, String state, String zipCode,String siteArea,String siteTerrain, String soilType, String clientId, String dateOfPurchase, String ownershipType)
 	{
 		db.enterSiteInfo(street, city, state, zipCode, siteArea, siteTerrain, soilType, clientId, dateOfPurchase, ownershipType);
-		
+
 	}
-	
+
 	public void clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password, String email[], long phoneNo[])
 	{
 		clientId = db.clientRegistration(fname,lname,street,city,state,zipcode,password,email,phoneNo);
-		
+
 	}
-	
+
 	public static void main(String[] args)
 	{
 		//Scanner in = new Scanner(System.in);
@@ -76,8 +77,7 @@ public class Client {
 		long phoneNo[] = {122323243,34221212 };
 		c.clientRegistration("afd", "adfa", "adfadf", "sgkn", "sdgks", "201310", "sdfsdf", email,phoneNo);
 		//in.close();
-		
+
 	}
 
 }
-

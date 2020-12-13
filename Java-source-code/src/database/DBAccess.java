@@ -7,18 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
-import java.sql.Date;  
+import java.sql.Date;
 
 public class DBAccess {
 
-	
+
 	Connection connect()
 	{
 		Connection c=null;
 		try {
-		
+
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","postgres");
+
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
+
 		}
 		catch(SQLException e1)
 		{
@@ -32,7 +34,7 @@ public class DBAccess {
 		}
 		return(c);
 	}
-	
+
 	public int searchClient(String usrName, String password)
 	{
 		Connection c = connect();
@@ -42,8 +44,8 @@ public class DBAccess {
 			st.setString(1,usrName);
 			st.setString(2,password);
 			ResultSet re = st.executeQuery();
-			
-			
+
+
 			while(re.next())
 			{
 				if(usrName.equals(re.getString("id")))
@@ -56,15 +58,15 @@ public class DBAccess {
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 			return(-1);
 		}
-		
+
 	}
-	
+
 	public int searchRetailer(String usrName, String password)
 	{
 		Connection c = connect();
@@ -74,8 +76,8 @@ public class DBAccess {
 			st.setString(1,usrName);
 			st.setString(2,password);
 			ResultSet re = st.executeQuery();
-			
-			
+
+
 			while(re.next())
 			{
 				if(usrName.equals(re.getString("id")))
@@ -88,15 +90,15 @@ public class DBAccess {
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 			return(-1);
 		}
-		
+
 	}
-	
+
 	public int searchBuilder(String usrName, String password)
 	{
 		Connection c = connect();
@@ -106,8 +108,8 @@ public class DBAccess {
 			st.setString(1,usrName);
 			st.setString(2,password);
 			ResultSet re = st.executeQuery();
-			
-			
+
+
 			while(re.next())
 			{
 				if(usrName.equals(re.getString("id")))
@@ -120,15 +122,15 @@ public class DBAccess {
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 			return(-1);
 		}
-		
+
 	}
-	
+
 	public int searchManager(String usrName, String password)
 	{
 		Connection c = connect();
@@ -139,8 +141,8 @@ public class DBAccess {
 			st.setString(3,usrName);
 			st.setString(1,password);
 			ResultSet re = st.executeQuery();
-			
-			
+
+
 			while(re.next())
 			{
 				if(usrName.equals(re.getString("id")))
@@ -153,15 +155,15 @@ public class DBAccess {
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 			return(-1);
 		}
-		
+
 	}
-	
+
 	public int searchSupervisor(String usrName, String password)
 	{
 		Connection c = connect();
@@ -171,8 +173,8 @@ public class DBAccess {
 			st.setString(2,usrName);
 			st.setString(1,password);
 			ResultSet re = st.executeQuery();
-			
-			
+
+
 			while(re.next())
 			{
 				if(usrName.equals(re.getString("id")))
@@ -185,15 +187,15 @@ public class DBAccess {
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 			return(-1);
 		}
-		
+
 	}
-	
+
 	public String searchClientName(String clientId)
 	{
 		Connection c = connect();
@@ -207,7 +209,7 @@ public class DBAccess {
 				name = re.getString("fname")+ " " + re.getString("lname");
 			}
 			return(name);
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -217,7 +219,7 @@ public class DBAccess {
 			return(name);
 		}
 	}
-	
+
 	public String[] searchClientEmail(String clientId)
 	{
 		Connection c = connect();
@@ -226,16 +228,16 @@ public class DBAccess {
 			PreparedStatement st = c.prepareStatement("SELECT email FROM Client_Emails WHERE id = ? ;");
 			st.setString(1,clientId);
 			ResultSet re = st.executeQuery();
-			
+
 			int i=0;
 			while(re.next())
 			{
 				Email[i] = re.getString("email");
 				i++;
 			}
-			
+
 			return(Email);
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -245,28 +247,28 @@ public class DBAccess {
 			return(Email);
 		}
 	}
-	
+
 	public long[] searchClientPhoneNo(String clientId)
 	{
 		Connection c = connect();
 		long PhoneNo[] = new long[10];
 		try {
-			
+
 			PreparedStatement st = c.prepareStatement("SELECT phone FROM Client_phone_numbers WHERE id = ? ;");
 			st.setString(1,clientId);
 			ResultSet re = st.executeQuery();
-			
+
 			int i=0;
 			while(re.next())
 			{
 				PhoneNo[i] = re.getLong("phone");
 				i++;
 			}
-			
+
 			return(PhoneNo);
-			
+
 		}
-		
+
 		catch(SQLException e)
 		{
 			e.printStackTrace();
@@ -275,26 +277,26 @@ public class DBAccess {
 			return(PhoneNo);
 		}
 	}
-	
+
 	public String searchClientAddress(String clientId)
 	{
 		Connection c = connect();
 		String address = new String();
 		try {
-			
+
 			PreparedStatement st = c.prepareStatement("SELECT street_name,city,state,zip_code FROM Client WHERE id = ? ;");
 			st.setString(1,clientId);
 			ResultSet re = st.executeQuery();
-			
+
 			while(re.next())
 			{
 				address = address + re.getString("street_name")+", "+ re.getString("city")+", "+ re.getString("state")+", "+ re.getString("zip_code");
 			}
-			
+
 			return(address);
-			
+
 		}
-		
+
 		catch(SQLException e)
 		{
 			e.printStackTrace();
@@ -316,17 +318,17 @@ public class DBAccess {
 			st.setString(5,mnf);
 			st.executeQuery();
 		}
-		
+
 		catch(SQLException e)
 		{
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
+
 	}
-	
-	
+
+
 	public boolean checkExistingRetailer(String n, String street,String city,String state,int zip,String mail)
 	{
 		Connection c = connect();
@@ -341,7 +343,7 @@ public class DBAccess {
 			st.setInt(5, zip);
 			st.setString(6, mail);
 			ResultSet rs=st.executeQuery();
-			
+
 			while(rs.next())
 			{
 				num=rs.getInt(1);
@@ -355,7 +357,7 @@ public class DBAccess {
 		}
 		if(num==0)
 		{
-			return false; 
+			return false;
 		}
 		else
 		{
@@ -391,7 +393,7 @@ public class DBAccess {
 				st.setString(7, mail);
 				st.executeQuery();
 			}
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -399,7 +401,7 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
+
 	}
 
 
@@ -429,9 +431,9 @@ public class DBAccess {
 			System.exit(0);
 		}
 		//return data for gui part
-		
+
 	}
-	
+
 	public String[] getBuilderDetails(String Bid)
 	{
 		Connection c=connect();
@@ -449,20 +451,20 @@ public class DBAccess {
 				Details[2] = rs.getString("street_name")+ ", " +rs.getString("city")+ ", "
 						+rs.getString("state")+ ", " + String.valueOf(rs.getInt("zip_code"));
 				Details[3] = rs.getString("gender");
-			
+
 			}
 			return(Details);
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 			return(Details);
 		}
 	}
-	
+
 	public double getBuilderSalary(String Bid)
 	{
 		Connection c=connect();
@@ -481,14 +483,15 @@ public class DBAccess {
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 			return(salary);
 		}
-		
+
 	}
+
 	
 	public void updateProjectStatus(String Pnum, String status,String Bid)
 	{
@@ -503,23 +506,23 @@ public class DBAccess {
 			c.commit();
 			st.close();
 			c.close();
-			
+
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
+
 	}
-	
+
 	public String[][] getProjectStatus(String Cid)
 	{
-		
+
 		Connection c=connect();
-		String Status[][] = new String[10][6]; 
+		String Status[][] = new String[10][7];
 		int i=0;
 		try
 		{
@@ -537,11 +540,10 @@ public class DBAccess {
 				Status[i][6] = re.getString(7);
 				i++;
 			}
-			c.commit();
 			st.close();
 			c.close();
 			return(Status);
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -550,9 +552,9 @@ public class DBAccess {
 			System.exit(0);
 			return(Status);
 		}
-		
+
 	}
-	
+
 	public void enterSiteInfo(String street, String city, String state, String zipCode,String siteArea,String siteTerrain, String soilType,String clientId, String dateOfPurchase, String ownershipType)
 	{
 		Connection c=connect();
@@ -579,11 +581,11 @@ public class DBAccess {
 			st.setDate(11, Date.valueOf(dateOfPurchase));
 			st.setString(12, ownershipType);
 			st.setString(13, "pending");
-			
+
 			st.executeUpdate();
 			st.close();
 			c.close();
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -591,9 +593,9 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-			
+
 	}
-	
+
 	public String clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password, String email[], long phoneNo[])
 	{
 		Connection c=connect();
@@ -605,14 +607,14 @@ public class DBAccess {
 			PreparedStatement st2 = c.prepareStatement("INSERT INTO Client_phone_numbers VALUES(?,?);");
 			Statement s = c.createStatement();
 			ResultSet r = s.executeQuery("SELECT count(*) FROM Client");
-			
-			
+
+
 			int l=0;
 			while(r.next())
 			{
 				l = r.getInt(1);
 			}
-			
+
 			cId = "C"+String.valueOf(l+1);
 			st.setString(1, cId);
 			st.setString(2, fname);
@@ -635,15 +637,15 @@ public class DBAccess {
 				st2.setLong(2,pNo);
 				st2.executeUpdate();
 			}
-			
-			
+
+
 
 			st.close();
 			st1.close();
 			st2.close();
 			c.close();
 			return(cId);
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -652,16 +654,16 @@ public class DBAccess {
 			System.exit(0);
 			return(cId);
 		}
-		
-		
-		
+
+
+
 	}
-	
+
 	public String[][] getBuilderProjects(String Bid)
 	{
 
 		Connection c=connect();
-		String Working_on[][] = new String[10][6]; 
+		String Working_on[][] = new String[10][6];
 		int i=0;
 		try
 		{
@@ -681,7 +683,7 @@ public class DBAccess {
 			st.close();
 			c.close();
 			return(Working_on);
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -690,9 +692,9 @@ public class DBAccess {
 			System.exit(0);
 			return(Working_on);
 		}
-		
-	}	
-	
+
+	}
+
 	public void allocateProject(String Pname, String assignedDate, String startDate, String endDate, String tenure,String mId, String siteId)
 	{
 		Connection c=connect();
@@ -714,9 +716,9 @@ public class DBAccess {
 			{
 				l=r.getInt(1)+1;
 			}
-			
+
 			String pNo = "P"+String.valueOf(l);
-			
+
 			PreparedStatement st2 = c.prepareStatement("INSERT INTO Project VALUES(?,?,?,?,?,?,?,?);");
 			st2.setString(1, pNo);
 			st2.setString(2, Pname);
@@ -727,17 +729,17 @@ public class DBAccess {
 			st2.setString(7, groupNo);
 			st2.setString(8, "0%");
 			st2.executeUpdate();
-			
+
 			PreparedStatement st = c.prepareStatement("UPDATE Site SET project_no=? WHERE id=? AND project_no=null AND verification_status='verified' ;");
 			st.setString(1, pNo);
 			st.setString(2, siteId);
 			st.executeUpdate();
-			
+
 			st.close();
 			s.close();
 			st2.close();
 			c.close();
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -745,14 +747,14 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
-		
+
+
 	}
-	
+
 	public String[][] viewUnallocatedSites()
 	{
 		Connection c=connect();
-		String Sites[][] = new String[10][6]; 
+		String Sites[][] = new String[10][6];
 		int i=0;
 		try
 		{
@@ -771,7 +773,7 @@ public class DBAccess {
 			st.close();
 			c.close();
 			return(Sites);
-			
+
 		}
 		catch(SQLException e)
 		{
@@ -780,10 +782,10 @@ public class DBAccess {
 			System.exit(0);
 			return(Sites);
 		}
-		
-		
+
+
 	}
-	
+
 	public void assignProject(String pId, String bId)
 	{
 		Connection c=connect();
@@ -796,37 +798,18 @@ public class DBAccess {
 			c.commit();
 			st.close();
 			c.close();
-			
+
 		}
 		catch(SQLException e)
 		{
-			
+
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
-	}
-	
-	public String[][] viewProjectsForAssigning(String mId)
-	{
-		{
-			Connection c=connect();
 
-			try
-			{
-				String groupNo="";
-				PreparedStatement st1 = c.prepareStatement("SELECT number FROM Groups WHERE manager_id = ?");
-				st1.setString(1,mId);
-				ResultSet re = st1.executeQuery();
-				while(re.next())
-				{
-					groupNo = re.getString("number");
-				}
-				
-				
-		
-		
 	}
+
+	
 
 }

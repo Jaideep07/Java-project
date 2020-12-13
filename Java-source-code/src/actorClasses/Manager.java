@@ -49,7 +49,13 @@ public class Manager extends Builder implements ProjectOperations{
 	public String[][] builderPerformanceTracking()
 	{
 		String performance[][] = db.builderPerformanceTracking(id);
+		return(performance);
 
+	}
+	
+	public void giveSalaryBonus(String bId, double percent)
+	{
+		db.giveSalaryBonus(bId,percent);
 	}
 
 

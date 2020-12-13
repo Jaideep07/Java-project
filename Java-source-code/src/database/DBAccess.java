@@ -823,13 +823,13 @@ public class DBAccess {
 				int i=0;
 				while(r.next())
 				{
-					Projects[i][0] = re.getString(1);
-					Projects[i][1] = re.getString(2);
-					Projects[i][2] = re.getString(3);
-					Projects[i][3] = re.getString(4);
-					Projects[i][4] = re.getString(5);
-					Projects[i][5] = re.getString(6);
-					Projects[i][6] = re.getString(7);
+					Projects[i][0] = r.getString(1);
+					Projects[i][1] = r.getString(2);
+					Projects[i][2] = r.getString(3);
+					Projects[i][3] = r.getString(4);
+					Projects[i][4] = r.getString(5);
+					Projects[i][5] = r.getString(6);
+					Projects[i][6] = r.getString(7);
 					i++;
 				}
 				st.close();
@@ -1081,24 +1081,24 @@ public class DBAccess {
 		
 	}
 	
-	public String[][] getRawMaterials()
+	public String[][] getRetailers()
 	{
 		Connection c=connect();
-		String rawMaterials[][] = new String[18][4];
+		String retailers[][] = new String[18][4];
 		try
 		{
-			PreparedStatement st = c.prepareStatement("SELECT DISTINCT material_name,material_model,material_type,manufacturer FROM Retailer_material;");
+			PreparedStatement st = c.prepareStatement("SELECT id,name,state,service_rating FROM Retailer;");
 			ResultSet r = st.executeQuery();
 			int i=0;
 			while(r.next())
 			{
-				rawMaterials[i][0] = r.getString(1);
-				rawMaterials[i][1] = r.getString(2);
-				rawMaterials[i][2] = r.getString(3);
-				rawMaterials[i][3] = r.getString(4);
+				retailers[i][0] = r.getString(1);
+				retailers[i][1] = r.getString(2);
+				retailers[i][2] = r.getString(3);
+				retailers[i][3] = r.getString(4);
 				i++;
 			}
-			return(rawMaterials);
+			return(retailers);
 
 		}
 		catch(SQLException e)
@@ -1106,7 +1106,7 @@ public class DBAccess {
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
-			return(rawMaterials);
+			return(retailers);
 		}
 		
 	}
@@ -1117,7 +1117,7 @@ public class DBAccess {
 		String rawMaterials[][] = new String[18][4];
 		try
 		{
-			PreparedStatement st = c.prepareStatement("SELECT site_id,material_model,material_name FROM Supplies;");
+			PreparedStatement st = c.prepareStatement("SELECT site_id,material_model,material_name FROM Supplies WHERE retialer_id=null;");
 			ResultSet r = st.executeQuery();
 			int i=0;
 			while(r.next())
@@ -1194,7 +1194,7 @@ public class DBAccess {
 		String subcontracts[][] = new String[10][5];
 		try
 		{
-			PreparedStatement st = c.prepareStatement("SELECT * FROM Sbcontracts WHERE verification_status='pending';");
+			PreparedStatement st = c.prepareStatement("SELECT * FROM Subcontracts WHERE verification_status='pending';");
 			ResultSet r = st.executeQuery();
 			int i=0;
 			while(r.next())

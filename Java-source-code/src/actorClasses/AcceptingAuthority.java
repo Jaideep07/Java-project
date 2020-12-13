@@ -11,10 +11,10 @@ public class AcceptingAuthority {
 		
 	}
 	
-	public String[][] getRawMaterials()
+	public String[][] getRetailers()
 	{
-		String rawMaterials[][] = db.getRawMaterials();
-		return(rawMaterials);
+		String retailers[][] = db.getRetailers();
+		return(retailers);
 	}
 	
 	public String[][] showUnallocatedMaterials()

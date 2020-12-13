@@ -90,7 +90,7 @@ class loginUI implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String type = (String) select.getSelectedItem();
 		if(type.equals("Client") && e.getSource() == select) {
-			System.out.println("Working");
+			new ClientGui();
 		}
 		else {
 			String username = id.getText();
@@ -102,13 +102,19 @@ class loginUI implements ActionListener{
 										new ClientGui(username);
 										loginWindow.dispose();
 								}
-								else {
+								else if(e.getSource() != select){
 										message.setText(ul.clientLogin(username,password));
 								}
 						 break;
 				case("Retailer"): message.setText(ul.retailerLogin(username, password));
 						 break;
-				case("Builder"): message.setText(ul.builderLogin(username,password));
+				case("Builder"): if((ul.builderLogin(username,password)).equals("Success")) {
+										new BuilderGui(username);
+										loginWindow.dispose();
+								}
+								else if(e.getSource() != select){
+										message.setText(ul.builderLogin(username,password));
+								}
 						 break;
 				case("Manager"): message.setText(ul.managerLogin(username,password));
 						 break;

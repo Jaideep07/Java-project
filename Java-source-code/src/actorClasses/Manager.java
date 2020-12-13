@@ -6,7 +6,7 @@ public class Manager extends Builder implements ProjectOperations{
 
 	DBAccess db = new DBAccess();
 
-	Manager(String mId)
+	public Manager(String mId)
 	{
 		super(mId);
 	}
@@ -48,7 +48,7 @@ public class Manager extends Builder implements ProjectOperations{
 
 	public String[][] builderPerformanceTracking()
 	{
-		String performance[][] = db.builderPerformanceTracking(id);
+		String performance[][] = db.builderPerformanceTrackingManager(id);
 		return(performance);
 
 	}

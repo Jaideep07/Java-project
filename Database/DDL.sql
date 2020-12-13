@@ -395,7 +395,7 @@ insert into Works_on values('B1','P1',5,'100%'),
 						   ('B5','P6',5,'76.6%'),
 						   ('B6','P6',6,'58.5%'),
 						   ('B7','P6',7,'63.5%'),
-						   ('B8','P6',8,'43.5%');
+						   ('B8','P6',8,'43.5%'),
 						   ('B8','P7',8,'43.5%');
 
 create table Subcontracts (
@@ -403,19 +403,20 @@ create table Subcontracts (
 	contract_name varchar(10),
 	company_name varchar(20),
 	contact_number bigint,
+	verification_status varchar(20) CHECK(verification_status='verified' OR verification_status='not verified' OR verification_status='pending'),
 	primary key(contract_name),
 	foreign key(project_number) references Project(number)
 );
 
-insert into Subcontracts values('P1','P1-Machn','MCompany1',9192919291),
-							  ('P2','P2-Plumb','PCompany1',9292919291),
-							  ('P3','P3-Elect','ECompany1',9392919291),
-							  ('P4','P4-Machn','MCompany2',9492919291),
-							  ('P5','P5-Elect','ECompany2',9592919291),
-							  ('P5','P5-Plumb','PCompany1',9692919291),
-							  ('P6','P6-Machn','MCompany3',9792919291),
-							  ('P6','P6-Plumb','PCompany1',9892919291),
-							  ('P6','P6-Elect','ECompany1',9992919291);
+insert into Subcontracts values('P1','P1-Machn','MCompany1',9192919291,'verified'),
+							  ('P2','P2-Plumb','PCompany1',9292919291,'verified'),
+							  ('P3','P3-Elect','ECompany1',9392919291,'verified'),
+							  ('P4','P4-Machn','MCompany2',9492919291,'verified'),
+							  ('P5','P5-Elect','ECompany2',9592919291,'verified'),
+							  ('P5','P5-Plumb','PCompany1',9692919291,'verified'),
+							  ('P6','P6-Machn','MCompany3',9792919291,'verified'),
+							  ('P6','P6-Plumb','PCompany1',9892919291,'verified'),
+							  ('P6','P6-Elect','ECompany1',9992919291,'verified');
 
 
 create table Machinery (
@@ -467,7 +468,7 @@ insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
 retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;			 
 							 
-DROP table Builder,Client;	*/ 
+DROP table Builder,Client;	*/
 					
 1) SELECT * FROM Builder,Groups WHERE passcode=crypt('Atharv123',passcode) AND Groups.manager_id='B1' AND id = 'B1'; /* manager login*/
 2) SELECT distinct A.id FROM Builder A, Builder B WHERE A.passcode=crypt('Bhasker123',A.passcode) AND A.id=B.supervisor_id AND A.id = 'B3';
@@ -475,10 +476,14 @@ DROP table Builder,Client;	*/
 4) SELECT Project.number, Project.name, Site.street_name,Site.city,Site.state,CAST(Site.zip_code AS varchar) FROM Project,Works_on,Site WHERE Project.number=Works_on.project_no AND Works_on.project_no=Site.project_no AND Works_on.Builder_Id = 'B1';
 5) SELECT DISTINCT number,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYYY'),Project.completion_status,Site.city,Site.state,COUNT(Works_on.builder_id) FROM Site,Project,Works_On WHERE Site.project_no = Project.number AND Works_on.project_no = Project.number AND verification_status='verified' AND Project.group_number = 'G6' GROUP BY(project.number,Site.city,Site.state);
 6) SELECT Works_on.builder_id, Works_on.project_no,Works_on.completion_status FROM Works_on,Works_in WHERE Works_on.builder_id = Works_in.builder_id AND Works_in.group_number = 'G1';
+7) SELECT Works_in.builder_id, COUNT(project_no),SUM(hours) FROM Works_on,Works_in WHERE Works_in.builder_id=Works_on.builder_id AND Works_in.group_number=? GROUP BY(Works_in.builder_id) ORDER BY COUNT(project_no) DESC, SUM(hours) DESC;
+8) SELECT Works_on.builder_id, COUNT(project_no),SUM(hours) FROM Works_on,Builder A, Builder B WHERE A.supervisor_id = B.id AND A.id = Works_on.builder_id AND B.id ='B5'  GROUP BY(Works_on.builder_id) ORDER BY COUNT(project_no) DESC, SUM(hours) DESC;
+9) SELECT Works_on.builder_id, project_no, completion_status FROM Works_on,Builder A, Builder B WHERE A.supervisor_id = B.id AND A.id = Works_on.builder_id AND B.id ='B5';
+
 
 SELECT * FROM Works_on;
 
 DELETE FROM Site WHERE street_name='afd';
 
-SELECT * FROM Client;
+SELECT * FROM Works_on WHERE builder_id = 'B1' AND project_no='P1';
 DELETE FROM Client WHERE id = 'C6' OR id = 'C7' OR id = 'C8';

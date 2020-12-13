@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.Date;  
 
 public class DBAccess {
 
@@ -362,7 +363,7 @@ public class DBAccess {
 		}
 	}
 
-	public void addRetailer(String n, String street,String city,String state,int zip,String mail) {
+	public void retailerRegistration(String n, String street,String city,String state,int zip,String mail) {
 		Connection c=connect();
 		try
 		{
@@ -518,21 +519,21 @@ public class DBAccess {
 	{
 		
 		Connection c=connect();
-		String Status[][] = new String[10][5]; 
+		String Status[][] = new String[10][6]; 
 		int i=0;
 		try
 		{
-			PreparedStatement st=c.prepareStatement("SELECT TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
+			PreparedStatement st=c.prepareStatement("SELECT id,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
 			st.setString(1, Cid);
 			ResultSet re = st.executeQuery();
 			while(re.next())
 			{
-				Status[i][0] = re.getString(0);
-				Status[i][1] = re.getString(1);
-				Status[i][2] = re.getString(2);
-				Status[i][3] = re.getString(3);
-				Status[i][4] = re.getString(4);
-				Status[i][5] = re.getString(5);
+				Status[i][0] = re.getString(1);
+				Status[i][1] = re.getString(2);
+				Status[i][2] = re.getString(3);
+				Status[i][3] = re.getString(4);
+				Status[i][4] = re.getString(5);
+				Status[i][5] = re.getString(6);
 				i++;
 			}
 			c.commit();
@@ -550,7 +551,124 @@ public class DBAccess {
 		}
 		
 	}
-
 	
+	public void enterSiteInfo(String street, String city, String state, String zipCode,String siteArea,String siteTerrain, String soilType,String clientId, String dateOfPurchase, String ownershipType)
+	{
+		Connection c=connect();
+		try
+		{
+			PreparedStatement st=c.prepareStatement("INSERT INTO Site VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);");
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT count(*) FROM Site");
+			int l=0;
+			while(r.next())
+			{
+				l = r.getInt(1);
+			}
+			st.setString(1, "S"+String.valueOf(l+1));
+			st.setString(2, street);
+			st.setString(3, city);
+			st.setString(4, state);
+			st.setInt(5, Integer.parseInt(zipCode));
+			st.setInt(6, Integer.parseInt(siteArea));
+			st.setString(7, siteTerrain);
+			st.setString(8, soilType);
+			st.setString(9, null);
+			st.setString(10, clientId);
+			st.setDate(11, Date.valueOf(dateOfPurchase));
+			st.setString(12, ownershipType);
+			st.setString(13, "pending");
+			
+			st.executeUpdate();
+			st.close();
+			c.close();
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+			
+	}
+	
+	public String clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password)
+	{
+		Connection c=connect();
+		String cId = "";
+		try
+		{
+			PreparedStatement st=c.prepareStatement("INSERT INTO Client VALUES(?,?,?,?,?,?,?);");
+			Statement s = c.createStatement();
+			ResultSet r = s.executeQuery("SELECT count(*) FROM Client");
+			int l=0;
+			while(r.next())
+			{
+				l = r.getInt(1);
+			}
+			cId = "C"+String.valueOf(l+1);
+			st.setString(1, cId);
+			st.setString(2, fname);
+			st.setString(3, lname);
+			st.setString(4, street);
+			st.setString(5, city);
+			st.setString(6, state);
+			st.setInt(7, Integer.parseInt(password));
+
+			
+			st.executeUpdate();
+			st.close();
+			c.close();
+			return(cId);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(cId);
+		}
+		
+		
+		
+	}
+	
+	public String[][] getBuilderProjects(String Bid)
+	{
+
+		Connection c=connect();
+		String Working_on[][] = new String[10][6]; 
+		int i=0;
+		try
+		{
+			PreparedStatement st=c.prepareStatement("SELECT Project.number, Project.name, Site.street_name,Site.city,Site.state,CAST(Site.zip_code AS varchar) FROM Project,Works_on,Site WHERE Project.number=Works_on.project_no AND Works_on.project_no=Site.project_no AND Works_on.Builder_Id = ?;");
+			st.setString(1, Bid);
+			ResultSet re = st.executeQuery();
+			while(re.next())
+			{
+				Working_on[i][0] = re.getString(1);
+				Working_on[i][1] = re.getString(2);
+				Working_on[i][2] = re.getString(3);
+				Working_on[i][3] = re.getString(4);
+				Working_on[i][4] = re.getString(5);
+				Working_on[i][5] = re.getString(6);
+				i++;
+			}
+			st.close();
+			c.close();
+			return(Working_on);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(Working_on);
+		}
+		
+	}	
 
 }

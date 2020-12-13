@@ -519,7 +519,7 @@ public class DBAccess {
 	{
 
 		Connection c=connect();
-		String Status[][] = new String[10][6];
+		String Status[][] = new String[10][7];
 		int i=0;
 		try
 		{

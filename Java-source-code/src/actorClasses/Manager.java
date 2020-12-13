@@ -29,10 +29,27 @@ public class Manager extends Builder implements ProjectOperations{
 		db.assignProject(pId,bId);
 	}
 	
-	public String[][] viewProjectsForAssigning(String mId)
+	public String[][] viewProjectsForAssigning()
 	{
-		String projects[][] = db.viewProjectsForAssigning(mId);
+		String projects[][] = db.viewProjectsForAssigning(id);
 		return(projects);
+	}
+	
+	public String[][] projectStatus(String pId)
+	{
+		String builders[][] = db.projectStatusManager(pId,id);
+		return(builders);
+	}
+	
+	public void updateProjectStatus(String pId, String status)
+	{
+		db.updateProjectStatusManager(pId,status);
+	}
+	
+	public String[][] builderPerformanceTracking()
+	{
+		String performance = db.builderPerformanceTracking(id);
+		
 	}
 	
 

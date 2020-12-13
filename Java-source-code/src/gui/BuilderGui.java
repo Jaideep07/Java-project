@@ -12,14 +12,18 @@ public class BuilderGui implements ActionListener {
 	JButton exit=null;
 	Builder c;
 	JFrame f;
+	String p ;
+	String str;
+	JTextField status=null;
+	JTextField id=null;
 	BuilderGui()
 	{
 		
 	}
 
-	BuilderGui(String id)
+	BuilderGui(String username)
 	{
-		c= new Builder(id);
+		c= new Builder(username);
 		builderWindow = new JFrame();
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
 		JLabel background = new JLabel("",img,JLabel.CENTER);
@@ -70,8 +74,8 @@ public class BuilderGui implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		JTextField status=null;
-		JTextField id=null;
+		
+		
 		if(e.getSource()==update)
 		{
 			f=new JFrame("Update");
@@ -99,6 +103,7 @@ public class BuilderGui implements ActionListener {
 			f.add(enter);
 			enter.addActionListener(this);
 			
+			
 			f.setLayout(null);
 			f.setSize(500, 500);
 			f.setVisible(true);
@@ -110,14 +115,12 @@ public class BuilderGui implements ActionListener {
 		}
 		else
 		{
-			f.dispose();
+			//f.dispose();
 			JFrame frame= new JFrame("Message");
 			JOptionPane.showMessageDialog(frame, "Updated Successfully!");
-			String p ="";
-			
-			String str="";
 			p=id.getText();
 			str=status.getText();
+			
 			c.updateProjectStatus(p, str);
 			
 		}

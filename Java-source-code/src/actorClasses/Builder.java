@@ -41,7 +41,7 @@ public class Builder {
 
 	public void updateProjectStatus(String PNumber, String status)
 	{
-		db.updateProjectStatus(PNumber, status, id);
+		db.updateProjectStatusBuilder(PNumber, status, id);
 	}
 	
 	public String[][] getProjects()

@@ -396,6 +396,7 @@ insert into Works_on values('B1','P1',5,'100%'),
 						   ('B6','P6',6,'58.5%'),
 						   ('B7','P6',7,'63.5%'),
 						   ('B8','P6',8,'43.5%');
+						   ('B8','P7',8,'43.5%');
 
 create table Subcontracts (
 	project_number varchar(10),
@@ -462,7 +463,8 @@ insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 							 
 					 
 							 
-/*DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
+/*
+DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
 retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;			 
 							 
 DROP table Builder,Client;	*/ 
@@ -471,9 +473,12 @@ DROP table Builder,Client;	*/
 2) SELECT distinct A.id FROM Builder A, Builder B WHERE A.passcode=crypt('Bhasker123',A.passcode) AND A.id=B.supervisor_id AND A.id = 'B3';
 3) SELECT TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id='C2';            
 4) SELECT Project.number, Project.name, Site.street_name,Site.city,Site.state,CAST(Site.zip_code AS varchar) FROM Project,Works_on,Site WHERE Project.number=Works_on.project_no AND Works_on.project_no=Site.project_no AND Works_on.Builder_Id = 'B1';
+5) SELECT DISTINCT number,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYYY'),Project.completion_status,Site.city,Site.state,COUNT(Works_on.builder_id) FROM Site,Project,Works_On WHERE Site.project_no = Project.number AND Works_on.project_no = Project.number AND verification_status='verified' AND Project.group_number = 'G6' GROUP BY(project.number,Site.city,Site.state);
+6) SELECT Works_on.builder_id, Works_on.project_no,Works_on.completion_status FROM Works_on,Works_in WHERE Works_on.builder_id = Works_in.builder_id AND Works_in.group_number = 'G1';
 
-
+SELECT * FROM Works_on;
 
 DELETE FROM Site WHERE street_name='afd';
 
-SELECT * FROM Site;
+SELECT * FROM Client;
+DELETE FROM Client WHERE id = 'C6' OR id = 'C7' OR id = 'C8';

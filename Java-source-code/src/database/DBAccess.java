@@ -593,20 +593,25 @@ public class DBAccess {
 			
 	}
 	
-	public String clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password)
+	public String clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password, String email[], long phoneNo[])
 	{
 		Connection c=connect();
 		String cId = "";
 		try
 		{
-			PreparedStatement st=c.prepareStatement("INSERT INTO Client VALUES(?,?,?,?,?,?,?);");
+			PreparedStatement st=c.prepareStatement("INSERT INTO Client VALUES(?,?,?,?,?,?,?,crypt(?,gen_salt('bf',4)));");
+			PreparedStatement st1 = c.prepareStatement("INSERT INTO Client_Emails VALUES(?,?);");
+			PreparedStatement st2 = c.prepareStatement("INSERT INTO Client_phone_numbers VALUES(?,?);");
 			Statement s = c.createStatement();
 			ResultSet r = s.executeQuery("SELECT count(*) FROM Client");
+			
+			
 			int l=0;
 			while(r.next())
 			{
 				l = r.getInt(1);
 			}
+			
 			cId = "C"+String.valueOf(l+1);
 			st.setString(1, cId);
 			st.setString(2, fname);
@@ -614,10 +619,24 @@ public class DBAccess {
 			st.setString(4, street);
 			st.setString(5, city);
 			st.setString(6, state);
-			st.setInt(7, Integer.parseInt(password));
-
-			
+			st.setInt(7, Integer.parseInt(zipcode));
+			st.setString(8, password);
 			st.executeUpdate();
+			for (String eml : email)
+			{
+				st1.setString(1,cId);
+				st1.setString(2,eml);
+				st1.executeUpdate();
+			}
+			for (long pNo : phoneNo)
+			{
+				st2.setString(1,cId);
+				st2.setLong(2,pNo);
+				st2.executeUpdate();
+			}
+			
+			
+
 			st.close();
 			c.close();
 			return(cId);

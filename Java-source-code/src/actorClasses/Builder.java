@@ -12,12 +12,12 @@ public class Builder {
 	public String email;
 	DBAccess db = new DBAccess();
 
-	Builder()
+	public Builder()
 	{
 		id="";
 	}
 
-	Builder(String id)
+	public Builder(String id)
 	{
 		String Details[] = db.getBuilderDetails(id);
 		this.id = id;
@@ -39,7 +39,7 @@ public class Builder {
 		return (address);
 	}
 
-	public void updateProjectStatus(String PNumber, double status)
+	public void updateProjectStatus(String PNumber, String status)
 	{
 		db.updateProjectStatus(PNumber, status, id);
 	}

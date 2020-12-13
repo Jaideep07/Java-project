@@ -217,18 +217,19 @@ create table Site (
 	client_id varchar(10),
 	date_of_purchase date,
 	ownership_type varchar(30),
+	verification_status varchar(20) CHECK(verification_status='verified' OR verification_status='not verified' OR verification_status='pending'),
 	primary key(id),
 	foreign key(client_id) references Client(id),
 	foreign key(project_no) references Project(number)
 );
 
-insert into Site values('S1','Abids','Hyderabad','Telangana',500001,1500,'Open','Black','P1','C1','2005-10-25','Individual'),
-						('S2','Janpath','New Delhi','Delhi',110001,500,'Open','Sandy','P2','C2','2005-10-05', 'Individual'),
-						('S3','Janpath','New Delhi','Delhi',110001,1500,'Open','Sandy','P3','C2','2008-12-15' ,'Joint' ),
-						('S4','MG Road','Bangalore','Karnataka',560001,600,'Tundra','Sandy','P4','C3','2000-09-05' ,'Individual' ),
-						('S5','Ranganathan Gardens','Chennai','Tamil Nadu',600040,600,'Open','Sandy','P5','C4','1995-02-20' ,'Joint'),
-						('S6','Peddar Road','Mumbai','Maharashtra',400026,2000,'Open','Mountain','P6','C5','2010-05-05' ,'Individual'),
-						('S7','Peddar Road','Mumbai','Maharashtra',400026,2500,'Open','Mountain','P7','C5','2015-06-10' ,'Joint');
+insert into Site values ('S1','Abids','Hyderabad','Telangana',500001,1500,'Open','Black','P1','C1','2005-10-25','Individual','verified'),
+						('S2','Janpath','New Delhi','Delhi',110001,500,'Open','Sandy','P2','C2','2005-10-05', 'Individual','verified'),
+						('S3','Janpath','New Delhi','Delhi',110001,1500,'Open','Sandy','P3','C2','2008-12-15' ,'Joint' ,'verified'),
+						('S4','MG Road','Bangalore','Karnataka',560001,600,'Tundra','Sandy','P4','C3','2000-09-05' ,'Individual' ,'verified'),
+						('S5','Ranganathan Gardens','Chennai','Tamil Nadu',600040,600,'Open','Sandy','P5','C4','1995-02-20' ,'Joint' ,'verified'),
+						('S6','Peddar Road','Mumbai','Maharashtra',400026,2000,'Open','Mountain','P6','C5','2010-05-05' ,'Individual','verified'),
+						('S7','Peddar Road','Mumbai','Maharashtra',400026,2500,'Open','Mountain','P7','C5','2015-06-10' ,'Joint','verified');
 
 create table Raw_materials (
 	site_id varchar(10),
@@ -459,16 +460,20 @@ insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 							 
 							 
 							 
-	SELECT * FRom Client;						 
+					 
 							 
 /*DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
 retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;			 
 							 
-DROP table Builder,Client;			 
+DROP table Builder,Client;	*/ 
 					
 1) SELECT * FROM Builder,Groups WHERE passcode=crypt('Atharv123',passcode) AND Groups.manager_id='B1' AND id = 'B1'; /* manager login*/
 2) SELECT distinct A.id FROM Builder A, Builder B WHERE A.passcode=crypt('Bhasker123',A.passcode) AND A.id=B.supervisor_id AND A.id = 'B3';
-*/
+3) SELECT TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id='C2';            
+4) SELECT Project.number, Project.name, Site.street_name,Site.city,Site.state,CAST(Site.zip_code AS varchar) FROM Project,Works_on,Site WHERE Project.number=Works_on.project_no AND Works_on.project_no=Site.project_no AND Works_on.Builder_Id = 'B1';
 
 
 
+DELETE FROM Site WHERE street_name='afd';
+
+SELECT * FROM Site;

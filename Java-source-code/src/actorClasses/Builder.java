@@ -2,14 +2,11 @@ package actorClasses;
 
 import database.*;
 
+
 public class Builder {
-	public String builderId;
-	public String fname;
-	public String lname;
-	protected String street;
-	protected String city;
-	protected String state;
-	protected int zip;
+	public String id;
+	public String name;
+	protected String address;
 	public char gender;
 	private double salary;
 	public String email;
@@ -17,27 +14,47 @@ public class Builder {
 
 	Builder()
 	{
-		builderId="";
+		id="";
 	}
 
-	public double getSalary(String bId)
+	Builder(String id)
 	{
-		return db.getBuilderSalary(bId);
+		String Details[] = db.getBuilderDetails(id);
+		this.id = id;
+		this.salary = db.getBuilderSalary(id);
+		this.name = Details[0];
+		this.email = Details[1];
+		this.address = Details[2];
+		this.gender = Details[3].charAt(0);
+		
+	}
+	
+	public double getSalary()
+	{
+		return (salary);
 	}
 
 	public String getAddress()
 	{
-		return (street+", "+city+", "+state+", "+zip);
+		return (address);
 	}
 
-	public void updateProjectStatus(String bId)
+	public void updateProjectStatus(String PNumber, double status)
 	{
-
+		db.updateProjectStatus(PNumber, status, id);
 	}
+	
+	public String[][] getProjects()
+	{
+		String Projects[][] = db.getBuilderProjects(this.id);
+		return(Projects);
+		
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Builder b=new Builder();
-		b.getSalary("B1");
+		Builder b=new Builder("B1");
+	
 	}
 
 }

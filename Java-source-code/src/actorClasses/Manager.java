@@ -1,10 +1,7 @@
 package actorClasses;
 
-public class Manager {
+public class Manager extends Builder implements ProjectOperations{
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

@@ -21,7 +21,7 @@ public class BuilderGui implements ActionListener {
 		
 	}
 
-	BuilderGui(String username)
+	public BuilderGui(String username)
 	{
 		c= new Builder(username);
 		builderWindow = new JFrame();
@@ -126,9 +126,5 @@ public class BuilderGui implements ActionListener {
 		}
 	}
 		
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new BuilderGui("B1");
-	}
 }
 

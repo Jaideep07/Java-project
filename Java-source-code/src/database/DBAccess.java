@@ -302,6 +302,255 @@ public class DBAccess {
 			return(address);
 		}
 	}
+
+	public void addRetailerMaterials(String id, String name, String model, String type, String mnf) {
+		Connection c=connect();
+		try
+		{
+			PreparedStatement st=c.prepareStatement("insert into Retailer_material values(?,?,?,?,?);");
+			st.setString(1, id);
+			st.setString(2, name);
+			st.setString(3, model);
+			st.setString(4,type);
+			st.setString(5,mnf);
+			st.executeQuery();
+		}
+		
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+	}
+	
+	
+	public boolean checkExistingRetailer(String n, String street,String city,String state,int zip,String mail)
+	{
+		Connection c = connect();
+		int num=0;
+		try
+		{
+			PreparedStatement st=c.prepareStatement("select count(id) from Retailer where name=? and Street_name=? and city=? and state=? and zip_code=? and email=? ;");
+			st.setString(1, n);
+			st.setString(2, street);
+			st.setString(3, city);
+			st.setString(4, state);
+			st.setInt(5, zip);
+			st.setString(6, mail);
+			ResultSet rs=st.executeQuery();
+			
+			while(rs.next())
+			{
+				num=rs.getInt(1);
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		if(num==0)
+		{
+			return false; 
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	public void addRetailer(String n, String street,String city,String state,int zip,String mail) {
+		Connection c=connect();
+		try
+		{
+			if(checkExistingRetailer(n,street,city,state,zip,mail))
+			{
+				System.out.println("Reatiler already exist"); // gui part
+			}
+			else
+			{
+				PreparedStatement s=c.prepareStatement("select count(*) from Retailer;");
+				ResultSet r=s.executeQuery();
+				int num = 0;
+				while(r.next())
+				{
+					num=r.getInt(1);
+				}
+				String id="R"+(num+1);
+				PreparedStatement st=c.prepareStatement("insert into Retailer values(?,?,?,?,?,?,?);");
+				st.setString(1, id);
+				st.setString(2, n);
+				st.setString(3, street);
+				st.setString(4, city);
+				st.setString(5, state);
+				st.setInt(6, zip);
+				st.setString(7, mail);
+				st.executeQuery();
+			}
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+	}
+
+
+	public void viewRetailerOrders(String rId) {
+		// TODO Auto-generated method stub
+		Connection c=connect();
+		String orderDetail[][]=new String[10][5];
+		int i=0;
+		try
+		{
+			PreparedStatement s=c.prepareStatement("select site_id,material_model,material_name from Supplies where retailer_id=?;");
+			s.setString(1, rId);
+			ResultSet rs=s.executeQuery();
+
+			while(rs.next())
+			{
+				orderDetail[i][0]=rs.getString(1);
+				orderDetail[i][1]=rs.getString(2);
+				orderDetail[i][2]=rs.getString(3);
+				i++;
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		//return data for gui part
+		
+	}
+	
+	public String[] getBuilderDetails(String Bid)
+	{
+		Connection c=connect();
+		String Details[]=new String[4];
+		try
+		{
+			PreparedStatement s=c.prepareStatement("select fname,lname,email,street_name,city,state,zip_code,gender from Builder where id=?;");
+			s.setString(1, Bid);
+			ResultSet rs=s.executeQuery();
+
+			while(rs.next())
+			{
+				Details[0]=rs.getString("fname")+' '+rs.getString("lname");
+				Details[1]=rs.getString("email");
+				Details[2] = rs.getString("street_name")+ ", " +rs.getString("city")+ ", "
+						+rs.getString("state")+ ", " + String.valueOf(rs.getInt("zip_code"));
+				Details[3] = rs.getString("gender");
+			
+			}
+			return(Details);
+		}
+		catch(SQLException e)
+		{
+			
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(Details);
+		}
+	}
+	
+	public double getBuilderSalary(String Bid)
+	{
+		Connection c=connect();
+		double salary = 0;
+		try
+		{
+			PreparedStatement s=c.prepareStatement("select salary from Builder where id=?;");
+			s.setString(1, Bid);
+			ResultSet rs=s.executeQuery();
+
+			while(rs.next())
+			{
+				salary=rs.getDouble("salary");
+			}
+			return(salary);
+		}
+		catch(SQLException e)
+		{
+			
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(salary);
+		}
+		
+	}
+	
+	public void updateProjectStatus(String Pnum, double status,String Bid)
+	{
+		Connection c=connect();
+		try
+		{
+			PreparedStatement st=c.prepareStatement("UPDATE Works_on SET completion_status=? where builder_id=? AND project_no=?;");
+			st.setString(1, String.valueOf(status));
+			st.setString(2, Bid);
+			st.setString(3, Pnum);
+			st.executeQuery();
+			c.commit();
+			st.close();
+			c.close();
+			
+		}
+		catch(SQLException e)
+		{
+			
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+	}
+	
+	public String[][] getProjectStatus(String Cid)
+	{
+		
+		Connection c=connect();
+		String Status[][] = new String[10][5]; 
+		int i=0;
+		try
+		{
+			PreparedStatement st=c.prepareStatement("SELECT TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id=?;");
+			st.setString(1, Cid);
+			ResultSet re = st.executeQuery();
+			while(re.next())
+			{
+				Status[i][0] = re.getString(0);
+				Status[i][1] = re.getString(1);
+				Status[i][2] = re.getString(2);
+				Status[i][3] = re.getString(3);
+				Status[i][4] = re.getString(4);
+				Status[i][5] = re.getString(5);
+				i++;
+			}
+			c.commit();
+			st.close();
+			c.close();
+			return(Status);
+			
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(Status);
+		}
+		
+	}
+
 	
 
 }

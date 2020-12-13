@@ -12,8 +12,9 @@ public class Client {
 	protected String address;
 	private String password;
 	DBAccess db = new DBAccess();
+  
+	public Client()
 
-	Client()
 	{
 		clientId="";
 	}

@@ -117,6 +117,7 @@ class loginUI implements ActionListener{
 				case("None"): message.setText("Please select a LOGIN TYPE!");
 				 		 break;		 
 			}
+
 		}
 	}
 }

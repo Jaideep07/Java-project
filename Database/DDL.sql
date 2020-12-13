@@ -481,9 +481,15 @@ DROP table Builder,Client;	*/
 9) SELECT Works_on.builder_id, project_no, completion_status FROM Works_on,Builder A, Builder B WHERE A.supervisor_id = B.id AND A.id = Works_on.builder_id AND B.id ='B5';
 
 
-SELECT * FROM Works_on;
+SELECT * FROM Subcontracts;
 
 DELETE FROM Site WHERE street_name='afd';
 
 SELECT * FROM Works_on WHERE builder_id = 'B1' AND project_no='P1';
 DELETE FROM Client WHERE id = 'C6' OR id = 'C7' OR id = 'C8';
+
+SELECT id,name,state,service_rating FROM Retailer;
+
+SELECT DISTINCT material_name ,material_model,material_type ,manufacturer FROM Retailer_Material;
+
+

@@ -915,7 +915,7 @@ public class DBAccess {
 
 	}
 
-	public String[][] builderPerformanceTracking(String mId)
+	public String[][] builderPerformanceTrackingManager(String mId)
 	{
 		Connection c=connect();
 		String performance[][] = new String[15][3];
@@ -976,4 +976,44 @@ public class DBAccess {
 		}
 		
 	}
+	
+	public String[][] builderPerformanceTrackingSupervisor(String mId)
+	{
+		Connection c=connect();
+		String performance[][] = new String[15][3];
+		try
+		{
+			String groupNo="";
+			PreparedStatement st1 = c.prepareStatement("SELECT number FROM Groups WHERE manager_id = ?");
+			st1.setString(1,mId);
+			ResultSet re = st1.executeQuery();
+			while(re.next())
+			{
+				groupNo = re.getString("number");
+			}
+
+			PreparedStatement st = c.prepareStatement("SELECT Works_in.builder_id, COUNT(project_no),SUM(hours) FROM Works_on,Works_in WHERE Works_in.builder_id=Works_on.builder_id AND Works_in.group_number=? GROUP BY(Works_in.builder_id) ORDER BY COUNT(project_no) DESC, SUM(hours) DESC;");
+			st.setString(1, groupNo);
+			ResultSet r = st.executeQuery();
+			int i=0;
+			while(r.next())
+			{
+				performance[i][0] = r.getString(1);
+				performance[i][1] = r.getString(2);
+				performance[i][2] = r.getString(3);
+				i++;
+			}
+			return(performance);
+
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+			return(performance);
+		}
+
+	}
+	
 }

@@ -39,7 +39,7 @@ public class Builder {
 		return (address);
 	}
 
-	public void updateProjectStatus(String PNumber, double status)
+	public void updateProjectStatus(String PNumber, String status)
 	{
 		db.updateProjectStatus(PNumber, status, id);
 	}

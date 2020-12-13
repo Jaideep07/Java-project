@@ -490,16 +490,16 @@ public class DBAccess {
 		
 	}
 	
-	public void updateProjectStatus(String Pnum, double status,String Bid)
+	public void updateProjectStatus(String Pnum, String status,String Bid)
 	{
 		Connection c=connect();
 		try
 		{
 			PreparedStatement st=c.prepareStatement("UPDATE Works_on SET completion_status=? where builder_id=? AND project_no=?;");
-			st.setString(1, String.valueOf(status));
+			st.setString(1, status+"%");
 			st.setString(2, Bid);
 			st.setString(3, Pnum);
-			st.executeQuery();
+			st.executeUpdate();
 			c.commit();
 			st.close();
 			c.close();
@@ -519,7 +519,7 @@ public class DBAccess {
 	{
 		
 		Connection c=connect();
-		String Status[][] = new String[10][6]; 
+		String Status[][] = new String[10][7]; 
 		int i=0;
 		try
 		{
@@ -810,8 +810,9 @@ public class DBAccess {
 	
 	public String[][] viewProjectsForAssigning(String mId)
 	{
-		{
+		
 			Connection c=connect();
+			String Projects[][] = new String[10][7]; 
 
 			try
 			{
@@ -823,10 +824,35 @@ public class DBAccess {
 				{
 					groupNo = re.getString("number");
 				}
-				
-				
+				PreparedStatement st = c.prepareStatement("SELECT DISTINCT number,TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYYY'),Project.completion_status,Site.city,Site.state,COUNT(Works_on.builder_id) FROM Site,Project,Works_On WHERE Site.project_no = Project.number AND Works_on.project_no = Project.number AND verification_status='verified' AND Project.group_number = ? GROUP BY(project.number,Site.city,Site.state);");
+				st.setString(1,groupNo);
+				ResultSet r = st.executeQuery();
+				int i=0;
+				while(r.next())
+				{
+					Projects[i][0] = re.getString(1);
+					Projects[i][1] = re.getString(2);
+					Projects[i][2] = re.getString(3);
+					Projects[i][3] = re.getString(4);
+					Projects[i][4] = re.getString(5);
+					Projects[i][5] = re.getString(6);
+					Projects[i][6] = re.getString(7);
+					i++;
+				}
+				st.close();
+				st1.close();
+				c.close();
+				return(Projects);
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+				System.err.println(e.getClass().getName()+": "+e.getMessage());
+				System.exit(0);
+				return(Projects);
+			}
 		
 		
-	}
+		}
 
-}
+	}

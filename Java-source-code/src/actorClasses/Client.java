@@ -59,21 +59,23 @@ public class Client {
 		
 	}
 	
-	public void clientRegistration()
+	public void clientRegistration(String fname, String lname, String street, String city,String state,String zipcode, String password, String email[], long phoneNo[])
 	{
-		clientId = db.clientRegistration(name.split(" ",1)[0],name.split(" ",1)[1],address.split(", ",4)[0],address.split(", ",4)[1],address.split(", ",4)[2],address.split(", ",4)[3],password);
+		clientId = db.clientRegistration(fname,lname,street,city,state,zipcode,password,email,phoneNo);
 		
 	}
 	
 	public static void main(String[] args)
 	{
-		Scanner in = new Scanner(System.in);
-		String cId = in.next();
-		Client c = new Client(cId);
-		System.out.println(c.getName());
-		System.out.println(c.getAddress());
-		c.enterSiteInfo("afd", "adfa", "adfadf", "201310", "2322", "sddf", "sdfsdf", "C1", "2000-09-12", "joint");
-		in.close();
+		//Scanner in = new Scanner(System.in);
+		//String cId = in.next();
+		Client c = new Client();
+		//System.out.println(c.getName());
+		//System.out.println(c.getAddress());
+		String email[]= {"c.v.awe","sdsdf"};
+		long phoneNo[] = {122323243,34221212 };
+		c.clientRegistration("afd", "adfa", "adfadf", "sgkn", "sdgks", "201310", "sdfsdf", email,phoneNo);
+		//in.close();
 		
 	}
 

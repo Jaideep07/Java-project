@@ -6,7 +6,7 @@ public class Manager extends Builder implements ProjectOperations{
 
 	DBAccess db = new DBAccess();
 
-	Manager(String mId)
+	public Manager(String mId)
 	{
 		super(mId);
 	}

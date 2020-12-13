@@ -217,7 +217,7 @@ create table Site (
 	client_id varchar(10),
 	date_of_purchase date,
 	ownership_type varchar(30),
-	verification_status varchar(10) CHECK(verification_status='verified' OR verification_status='not verified' OR verification_status='pending'),
+	verification_status varchar(20) CHECK(verification_status='verified' OR verification_status='not verified' OR verification_status='pending'),
 	primary key(id),
 	foreign key(client_id) references Client(id),
 	foreign key(project_no) references Project(number)
@@ -465,10 +465,15 @@ insert into Electrical values('P3-Elect','Wiring',1,10000.00,'25KM'),
 /*DROP table builder,client,client_emails,client_phone_numbers,electrical,groups,machinery,plumbing,project,raw_materials,
 retailer,retailer_material,site,subcontracts,supplies,works_on,works_in;			 
 							 
-DROP table Builder,Client;	 */
+DROP table Builder,Client;	*/ 
 					
 1) SELECT * FROM Builder,Groups WHERE passcode=crypt('Atharv123',passcode) AND Groups.manager_id='B1' AND id = 'B1'; /* manager login*/
 2) SELECT distinct A.id FROM Builder A, Builder B WHERE A.passcode=crypt('Bhasker123',A.passcode) AND A.id=B.supervisor_id AND A.id = 'B3';
 3) SELECT TO_CHAR(Project.start_date,'DD-MM-YYYY'),TO_CHAR(Project.end_date,'DD-MM-YYY'),Project.completion_status,Site.city,Site.state FROM Site,Project,Client WHERE Site.project_no = Project.number AND Client.id=Site.client_id AND Client.id='C2';            
+4) SELECT Project.number, Project.name, Site.street_name,Site.city,Site.state,CAST(Site.zip_code AS varchar) FROM Project,Works_on,Site WHERE Project.number=Works_on.project_no AND Works_on.project_no=Site.project_no AND Works_on.Builder_Id = 'B1';
 
 
+
+DELETE FROM Site WHERE street_name='afd';
+
+SELECT * FROM Site;

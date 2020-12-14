@@ -9,12 +9,18 @@ public class Retailer {
 	protected String state;
 	protected int zip; 
 	public String email;
+	private String password;
 	public double serviceRating;
-	DBAccess db = new DBAccess();
+	DBAccessRetailer db = new DBAccessRetailer();
 	
-	Retailer()
+	public Retailer()
 	{
 		retailerId="";
+	}
+	
+	public Retailer(String Id)
+	{
+		retailerId=Id;
 	}
 	
 	
@@ -23,24 +29,24 @@ public class Retailer {
 		return (street+", "+city+", "+state+", "+zip);
 	}
 
-	void retailerRegistration(String n,String st,String c,String s,int z,String mail)
+	public String retailerRegistration(String n,String st,String c,String s,int z,String password,String mail)
 	{
-		db.retailerRegistration(n,st,c,s,z,mail);
+		return db.retailerRegistration(n,st,c,s,z,password,mail);
 	}
 	
-	void addMaterialDetails(String m_name,String model,String type,String manufacturer)
+	public void addMaterialDetails(String m_name,String model,String type,String manufacturer)
 	{
 		db.addRetailerMaterials(retailerId,m_name,model,type,manufacturer);
 	}
 	
-	void viewOrders(String rId)
+	public String[][] viewOrders(String rId)
 	{
-		db.viewRetailerOrders(rId);
+		return db.viewRetailerOrders(rId);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Retailer r=new Retailer();
-		r.retailerRegistration("Nagesh", "MG-Road", "Vijayawada", "Andhra Pradesh", 521165, "nagesh@gmailcom");
+		r.retailerRegistration("Nagesh", "MG-Road", "Vijayawada", "Andhra Pradesh", 521165,"nn", "nagesh@gmailcom");
 	}
 
 }

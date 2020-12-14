@@ -1,10 +1,10 @@
 package actorClasses;
 
-import database.DBAccess;
+import database.DBAccessAcceptingAuthority;
 
 public class AcceptingAuthority {
 	
-	DBAccess db = new DBAccess();
+	DBAccessAcceptingAuthority db = new DBAccessAcceptingAuthority();
 	
 	public AcceptingAuthority()
 	{

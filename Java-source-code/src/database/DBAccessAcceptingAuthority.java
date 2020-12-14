@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBAccessAcceptingAuthority {
-	
+
 	Connection connect()
 	{
 		Connection c=null;
 		try {
 
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","postgres");
 		}
 		catch(SQLException e1)
 		{
@@ -30,7 +30,7 @@ public class DBAccessAcceptingAuthority {
 		}
 		return(c);
 	}
-	
+
 	public String[][] getRetailers()
 	{
 		Connection c=connect();

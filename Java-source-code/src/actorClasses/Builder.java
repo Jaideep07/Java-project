@@ -10,7 +10,7 @@ public class Builder {
 	public char gender;
 	private double salary;
 	public String email;
-	DBAccess db = new DBAccess();
+	DBAccessBuilder db = new DBAccessBuilder();
 
 	public Builder()
 	{

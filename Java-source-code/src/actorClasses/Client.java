@@ -11,7 +11,7 @@ public class Client {
 	protected long[] phoneNo;
 	protected String address;
 	private String password;
-	DBAccess db = new DBAccess();
+	DBAccessClient db = new DBAccessClient();
 
 	public Client()
 	{

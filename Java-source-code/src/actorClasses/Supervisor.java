@@ -1,19 +1,19 @@
 package actorClasses;
 
-import database.DBAccess;
+import database.DBAccessSupervisor;
 
 public class Supervisor extends Builder implements ProjectOperations{
 	
-	DBAccess db = new DBAccess();
+	DBAccessSupervisor db = new DBAccessSupervisor();
 
 	Supervisor(String sId)
 	{
 		super(sId);
 	}
 	
-	public void allocateRawMaterials(String siteId, String materailName ,String materialModel)
+	public void allocateRawMaterials(String siteId, String materailName ,String materialModel,int materialQty, int reorderLevel, int avilableQty)
 	{
-		db.allocateRawMaterials(siteId,materailName,materialModel);
+		db.allocateRawMaterials(siteId,materailName,materialModel,materialQty,reorderLevel, avilableQty);
 	}
 	
 	public String[][] getRawMaterials()

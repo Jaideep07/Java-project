@@ -6,7 +6,7 @@ public class Supervisor extends Builder implements ProjectOperations{
 	
 	DBAccessSupervisor db = new DBAccessSupervisor();
 
-	Supervisor(String sId)
+	public Supervisor(String sId)
 	{
 		super(sId);
 	}

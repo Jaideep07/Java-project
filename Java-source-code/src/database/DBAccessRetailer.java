@@ -31,104 +31,121 @@ public class DBAccessRetailer {
 		return(c);
 	}
 	
-	public boolean checkExistingRetailer(String n, String street,String city,String state,int zip,String mail)
-	{
-		Connection c = connect();
-		int num=0;
-		try
-		{
-			PreparedStatement st=c.prepareStatement("select count(id) from Retailer where name=? and Street_name=? and city=? and state=? and zip_code=? and email=? ;");
-			st.setString(1, n);
-			st.setString(2, street);
-			st.setString(3, city);
-			st.setString(4, state);
-			st.setInt(5, zip);
-			st.setString(6, mail);
-			ResultSet rs=st.executeQuery();
-
-			while(rs.next())
-			{
-				num=rs.getInt(1);
-			}
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-			System.err.println(e.getClass().getName()+": "+e.getMessage());
-			System.exit(0);
-		}
-		if(num==0)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	
-	public String retailerRegistration(String n, String street,String city,String state,int zip,String password,String mail) {
-		Connection c=connect();
-		String ans=null;
-		try
-		{
-			if(!(checkExistingRetailer(n,street,city,state,zip,mail)))
-			{
-				PreparedStatement s=c.prepareStatement("select count(*) from Retailer;");
-				ResultSet r=s.executeQuery();
-				int num = 0;
-				while(r.next())
-				{
-					num=r.getInt(1);
-				}
-				String id="R"+(num+1);
-				PreparedStatement st=c.prepareStatement("insert into Retailer values(?,?,?,?,?,?,?,crypt(?,gen_salt('bf',4)));");
-				st.setString(1, id);
-				st.setString(2, n);
-				st.setString(3, street);
-				st.setString(4, city);
-				st.setString(5, state);
-				st.setInt(6, zip);
-				st.setString(7, mail);
-				st.setString(8, password);
-				st.executeQuery();
-				ans="Registered Successfully";
-			}
-			else
-			{
-				ans="You are already Registered";
-			}
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-			System.err.println(e.getClass().getName()+": "+e.getMessage());
-			System.exit(0);
-		}
-		return ans;
-	}
-	
 	public void addRetailerMaterials(String id, String name, String model, String type, String mnf) {
-		Connection c=connect();
-		try
-		{
-			PreparedStatement st=c.prepareStatement("insert into Retailer_material values(?,?,?,?,?);");
-			st.setString(1, id);
-			st.setString(2, name);
-			st.setString(3, model);
-			st.setString(4,type);
-			st.setString(5,mnf);
-			st.executeQuery();
-		}
+        Connection c=connect();
+        try
+        {
+            PreparedStatement st=c.prepareStatement("insert into Retailer_material values(?,?,?,?,?);");
+            st.setString(1, id);
+            st.setString(2, name);
+            st.setString(3, model);
+            st.setString(4,type);
+            st.setString(5,mnf);
+            st.executeQuery();
+        }
 
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-			System.err.println(e.getClass().getName()+": "+e.getMessage());
-			System.exit(0);
-		}
+ 
 
-	}
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+
+ 
+
+    }
+
+ 
+
+
+    public boolean checkExistingRetailer(String n, String street,String city,String state,int zip,String mail)
+    {
+        Connection c = connect();
+        int num=0;
+        try
+        {
+            PreparedStatement st=c.prepareStatement("select count(id) from Retailer where name=? and Street_name=? and city=? and state=? and zip_code=? and email=? ;");
+            st.setString(1, n);
+            st.setString(2, street);
+            st.setString(3, city);
+            st.setString(4, state);
+            st.setInt(5, zip);
+            st.setString(6, mail);
+            ResultSet rs=st.executeQuery();
+
+ 
+
+            while(rs.next())
+            {
+                num=rs.getInt(1);
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        System.out.println(num);
+        if(num==0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+ 
+
+
+    public String retailerRegistration(String n, String street,String city,String state,int zip,String password,String mail) {
+        Connection c=connect();
+        String ans="Registered";
+        try
+        {
+            if(!(checkExistingRetailer(n,street,city,state,zip,mail)))
+            {
+                PreparedStatement s=c.prepareStatement("select count(*) from Retailer;");
+                ResultSet r=s.executeQuery();
+                int num = 0;
+                while(r.next())
+                {
+                    num=r.getInt(1);
+                }
+                String id="R"+(num+1);
+                PreparedStatement st=c.prepareStatement("insert into Retailer values(?,?,?,?,?,?,?,crypt(?,gen_salt('bf',4)));");
+                st.setString(1, id);
+                st.setString(2, n);
+                st.setString(3, street);
+                st.setString(4, city);
+                st.setString(5, state);
+                st.setInt(6, zip);
+                st.setString(7, mail);
+                st.setString(8, password);
+                st.executeUpdate();
+                ans="Registered Successfully and your id is "+ id;
+            }
+            else
+            {
+                ans="You are already Registered";
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        finally
+        {
+            return ans;
+        }
+        
+    }
 
 	
 	public String[][] viewRetailerOrders(String rId) {

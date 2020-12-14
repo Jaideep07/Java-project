@@ -15,6 +15,8 @@ public class AcceptingAuthorityGui implements ActionListener {
 	JTextField tf2=null;
 	JTextField tf3=null;
 	JTextField tf4=null;
+	JTextField tf5=null;
+	JTextField tf6=null;
 	JButton b1= new JButton("Assigns");
 	JButton b2= new JButton("Assigns");
 	AcceptingAuthority a=new AcceptingAuthority();
@@ -42,10 +44,10 @@ public class AcceptingAuthorityGui implements ActionListener {
         l3.setFont(new Font("Times New Roman", Font.BOLD, 18));
         l4.setFont(new Font("Times New Roman", Font.BOLD, 18));
         
-        String data1[][]= a.getRawMaterials(); 		// add code part and return
-        String column1[]= {"Material Name","Material Model","Material Type","Manufacuter"};      			// add code part and return
-        String data2[][]= a.showUnallocatedMaterials(); 		// add code part and return
-        String column2[]= {};    			   	// add code part and return
+        String data1[][]= a.getRetailers(); 		// add code part and return
+        String column1[]= {"Id","Name","State","Service Rating"};      			// add code part and return
+        String data2[][]= a.viewSubcontracts(); 		// add code part and return 
+        String column2[]= {"Site Id","Material Model","Material Name"};    			   	// add code part and return
         
         JTable t1=new JTable(data1,column1);
         JTable t2=new JTable(data2,column2);
@@ -81,28 +83,37 @@ public class AcceptingAuthorityGui implements ActionListener {
 		JLabel lb5=new JLabel("Assigns");
 		JLabel lb6=new JLabel("Subcontract Id:");
 		JLabel lb7=new JLabel("To");
-		JLabel lb8=new JLabel("Site Id:");
+		JLabel lb8=new JLabel("Project Id:");
 		
-		JLabel lb9=new JLabel("Material Model");
-		JLabel lb10=new JLabel("Material Name");
+		JLabel lb9=new JLabel("Material Model:");
+		JLabel lb10=new JLabel("Material Name:");
 		
 		tf1=new JTextField("");
 		tf2=new JTextField("");
-        tf1.setBounds(180, 490, 100, 20);
-        tf2.setBounds(180, 550, 100, 20);
+        tf1.setBounds(220, 490, 100, 20);
+        tf2.setBounds(220, 550, 100, 20);
         tf3=new JTextField("");
 		tf4=new JTextField("");
 		tf3.setBounds(730, 490, 100, 20);
         tf4.setBounds(730, 550, 100, 20);
+        tf5=new JTextField("");
+        tf6=new JTextField("");
+        tf5.setBounds(220, 575, 100, 20);
+        tf6.setBounds(220, 600, 100, 20);
+        
         
 		lb1.setBounds(80, 460, 100, 20);
 		lb2.setBounds(80, 490, 100, 20);
 		lb3.setBounds(80, 520, 100, 20);
 		lb4.setBounds(80, 550, 100, 20);
+		lb9.setBounds(80, 575, 120, 20);
+		lb10.setBounds(80, 600, 120, 20);
 		lb1.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lb2.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lb3.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lb4.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lb9.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		lb10.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
 		lb5.setBounds(600, 460, 100, 20);
 		lb6.setBounds(600, 490, 150, 20);
@@ -113,15 +124,19 @@ public class AcceptingAuthorityGui implements ActionListener {
 		lb7.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		lb8.setFont(new Font("Times New Roman", Font.BOLD, 15));
 		
-		b1.setBounds(160, 600, 100, 30);
+		b1.setBounds(160, 625, 100, 30);
 		b2.setBounds(700, 600, 100, 30);
 
 		authorityWindow.add(lb1);
 		authorityWindow.add(lb2);
 		authorityWindow.add(lb3);
 		authorityWindow.add(lb4);
+		authorityWindow.add(lb9);
+		authorityWindow.add(lb10);
 		authorityWindow.add(tf1);
 		authorityWindow.add(tf2);
+		authorityWindow.add(tf5);
+		authorityWindow.add(tf6);
 		
 		authorityWindow.add(lb5);
 		authorityWindow.add(lb6);
@@ -169,11 +184,16 @@ public class AcceptingAuthorityGui implements ActionListener {
 		}
 		else if(e.getSource()==b1)
 		{
-			
+			String rId=tf1.getText();
+			String siteId=tf2.getText();
+			String materialModel=tf5.getText();
+			String materialName=tf6.getText();
+			a.approveRawMaterial(rId, siteId, materialModel, materialName);
 		}
 		else if(e.getSource()==b2)
 		{
-			
+			String pId=tf4.getText();
+			a.approveSubcontracts(pId);
 		}
 		
 	}

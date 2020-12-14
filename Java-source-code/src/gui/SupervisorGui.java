@@ -19,6 +19,10 @@ public class SupervisorGui implements ActionListener{
 	JTextField companyName  = null;
 	JTextField contactno  = null;
 	
+	JTextField materialQty  = null;
+	JTextField reorderLevel  = null;
+	JTextField avilableQty  = null;
+	
 	JButton allocateSubCon = null;
 	JButton showProjectStat = null;
 	JButton trackBuilder = null;
@@ -26,13 +30,13 @@ public class SupervisorGui implements ActionListener{
 	JButton allocateRawMat = null;
 
 	String sid = null;
-	Supervisor s1 = new Supervisor(sid);
+	Supervisor s1 = null;
 		public SupervisorGui(String username){
 			SupWindow = new JFrame("Supervisor");
 			ImageIcon img = new ImageIcon("src/Construction.jpg");
 			JLabel background = new JLabel("",img,JLabel.CENTER);
 			sid = username;
-			
+			s1 = new Supervisor(sid);
 			JLabel user = new JLabel("Welcome! "+ s1.name);
 			user.setBounds(15,7,250,12);
 			user.setForeground(Color.red);
@@ -75,28 +79,64 @@ public class SupervisorGui implements ActionListener{
 			p1.add(site);
 			
 			JLabel mName = new JLabel("Material name");
-			mName.setBounds(15,80,200,20);
+			mName.setBounds(15,70,200,20);
 			mName.setForeground(Color.DARK_GRAY);
 			mName.setFont(new Font("Times New Roman", Font.BOLD, 18));
 			p1.add(mName);
 			
 			matName = new JTextField("");
-			matName.setBounds(200,80,100,20);
+			matName.setBounds(200,70,100,20);
 			matName.setForeground(Color.GRAY);
 			matName.setFont(new Font("Times New Roman", Font.ITALIC, 16));
 			p1.add(matName);
 			
 			JLabel mModel = new JLabel("Material model");
-			mModel.setBounds(15,120,200,20);
+			mModel.setBounds(15,100,200,20);
 			mModel.setForeground(Color.DARK_GRAY);
 			mModel.setFont(new Font("Times New Roman", Font.BOLD, 18));
 			p1.add(mModel);
 			
 			matModel = new JTextField("");
-			matModel.setBounds(200,120,100,20);
+			matModel.setBounds(200,100,100,20);
 			matModel.setForeground(Color.GRAY);
 			matModel.setFont(new Font("Times New Roman", Font.ITALIC, 16));
 			p1.add(matModel);
+			
+			JLabel matQty = new JLabel("Material quantity");
+			matQty.setBounds(15,130,200,20);
+			matQty.setForeground(Color.DARK_GRAY);
+			matQty.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			p1.add(matQty);
+			
+			materialQty = new JTextField("");
+			materialQty.setBounds(200,130,100,20);
+			materialQty.setForeground(Color.GRAY);
+			materialQty.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+			p1.add(materialQty);
+			
+			JLabel rlvl = new JLabel("Reorder level");
+			rlvl.setBounds(15,160,200,20);
+			rlvl.setForeground(Color.DARK_GRAY);
+			rlvl.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			p1.add(rlvl);
+			
+			reorderLevel = new JTextField("");
+			reorderLevel.setBounds(200,160,100,20);
+			reorderLevel.setForeground(Color.GRAY);
+			reorderLevel.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+			p1.add(reorderLevel);
+			
+			JLabel avlQty = new JLabel("Available quantity");
+			avlQty.setBounds(15,190,200,20);
+			avlQty.setForeground(Color.DARK_GRAY);
+			avlQty.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			p1.add(avlQty);
+			
+			avilableQty = new JTextField("");
+			avilableQty.setBounds(200,190,100,20);
+			avilableQty.setForeground(Color.GRAY);
+			avilableQty.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+			p1.add(avilableQty);
 			
 			allocateRawMat = new JButton("Allocate");
 			allocateRawMat.setBounds(85, 230, 200, 22);
@@ -161,6 +201,18 @@ public class SupervisorGui implements ActionListener{
 			contactno.setFont(new Font("Times New Roman", Font.ITALIC, 16));
 			p2.add(contactno);
 			
+			JLabel bid = new JLabel("BuilderID");
+			bid.setBounds(15,200,200,20);
+			bid.setForeground(Color.DARK_GRAY);
+			bid.setFont(new Font("Times New Roman", Font.BOLD, 18));
+			p2.add(bid);
+			
+			builderID = new JTextField("");
+			builderID.setBounds(200,200,100,20);
+			builderID.setForeground(Color.GRAY);
+			builderID.setFont(new Font("Times New Roman", Font.ITALIC, 16));
+			p2.add(builderID);
+			
 			allocateSubCon = new JButton("Allocate");
 			allocateSubCon.setBounds(85, 230, 200, 22);
 			p2.add(allocateSubCon);
@@ -186,31 +238,54 @@ public class SupervisorGui implements ActionListener{
 			SupWindow.setVisible(true);
 			
 			exit.addActionListener(this);
-			allocateRawMat.addActionListener(this);
 			allocateSubCon.addActionListener(this);
 			showProjectStat.addActionListener(this);
+			allocateRawMat.addActionListener(this);
+			trackBuilder.addActionListener(this);
+			getRawMat.addActionListener(this);
 		}
 		public void actionPerformed(ActionEvent e) {
 			
 			if(e.getSource().equals(exit)) {
 				SupWindow.dispose();
 			}
-			else if(e.getSource().equals(allocateRawMat)) {
-				//s1.allocateRawMaterials(site.getText(), matName.getText(), matModel.getText());
+
+			if(e.getSource().equals(allocateRawMat)) {
+				s1.allocateRawMaterials(site.getText(), matName.getText(), matModel.getText(),Integer.parseInt(materialQty.getText()),Integer.parseInt(reorderLevel.getText()),Integer.parseInt(avilableQty.getText()));
+
 			}
-			else if(e.getSource().equals(allocateSubCon)) {
+			if(e.getSource().equals(allocateSubCon)) {
 				s1.allocateSubcontracts(pno.getText(), contractName.getText(), companyName.getText(), Long.parseLong(contactno.getText()));
 			}
-			else if(e.getSource().equals(showProjectStat)) {
+			if(e.getSource().equals(showProjectStat)) {
 				JFrame frame= new JFrame("Projects Status");
 				String[] columns = {"builder_id", "project_no", "completion_status" };
-				JTable table = new JTable(s1.projectStatus(pno.getText()),columns);
+				JTable table = new JTable(s1.projectStatus(builderID.getText()),columns);
 				JScrollPane scroll = new JScrollPane(table);
 				scroll.setSize(300,100);
 				frame.add(scroll);
 				frame.setSize(500,300);
 				frame.setVisible(true);
 			}
-			
+			if(e.getSource().equals(trackBuilder)) {
+				JFrame frame= new JFrame("Track builder");
+				String[] columns = {"builder_id", "no_of_projects"," total_hours"};
+				JTable table = new JTable(s1.builderPerformanceTracking(),columns);
+				JScrollPane scroll = new JScrollPane(table);
+				scroll.setSize(300,100);
+				frame.add(scroll);
+				frame.setSize(500,300);
+				frame.setVisible(true);
+			}
+			if(e.getSource().equals(getRawMat)) {
+				JFrame frame= new JFrame("Raw materials");
+				String[] columns = {"material_name","material_model","material_type" ,"manufacturer"};
+				JTable table = new JTable(s1.getRawMaterials(),columns);
+				JScrollPane scroll = new JScrollPane(table);
+				scroll.setSize(300,100);
+				frame.add(scroll);
+				frame.setSize(500,300);
+				frame.setVisible(true);
+			}
 		}
 }

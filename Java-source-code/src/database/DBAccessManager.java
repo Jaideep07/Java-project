@@ -236,7 +236,7 @@ public class DBAccessManager {
 			PreparedStatement st=c.prepareStatement("UPDATE Project SET completion_status=? where number=?;");
 			st.setString(1, status+"%");
 			st.setString(2, pId);
-			System.out.println(pId);
+			st.executeUpdate();
 			st.close();
 			c.close();
 

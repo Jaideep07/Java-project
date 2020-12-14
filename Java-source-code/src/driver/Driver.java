@@ -116,7 +116,13 @@ class loginUI implements ActionListener{
 										message.setText(ul.builderLogin(username,password));
 								}
 						 break;
-				case("Manager"): message.setText(ul.managerLogin(username,password));
+				case("Manager"):if((ul.managerLogin(username,password)).equals("Success")) {
+										new ManagerGui(username);
+										loginWindow.dispose();
+								}
+								else if(e.getSource() != select){
+										message.setText(ul.managerLogin(username,password));
+								}
 						 break;
 				case("Supervisor"): message.setText(ul.supervisorLogin(username,password));
 						 break;

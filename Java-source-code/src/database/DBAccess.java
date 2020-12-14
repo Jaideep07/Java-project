@@ -18,7 +18,7 @@ public class DBAccess {
 		try {
 
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","Wildwest");
 		}
 		catch(SQLException e1)
 		{
@@ -829,13 +829,13 @@ public class DBAccess {
 				int i=0;
 				while(r.next())
 				{
-					Projects[i][0] = re.getString(1);
-					Projects[i][1] = re.getString(2);
-					Projects[i][2] = re.getString(3);
-					Projects[i][3] = re.getString(4);
-					Projects[i][4] = re.getString(5);
-					Projects[i][5] = re.getString(6);
-					Projects[i][6] = re.getString(7);
+					Projects[i][0] = r.getString(1);
+					Projects[i][1] = r.getString(2);
+					Projects[i][2] = r.getString(3);
+					Projects[i][3] = r.getString(4);
+					Projects[i][4] = r.getString(5);
+					Projects[i][5] = r.getString(6);
+					Projects[i][6] = r.getString(7);
 					i++;
 				}
 				st.close();

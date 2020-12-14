@@ -16,7 +16,7 @@ public class DBAccessAcceptingAuthority {
 		try {
 
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","postgres");
 		}
 		catch(SQLException e1)
 		{
@@ -95,7 +95,7 @@ public class DBAccessAcceptingAuthority {
 		Connection c=connect();
 		try
 		{
-			PreparedStatement st=c.prepareStatement("UPDATE Supplies SET rId = ? WHERE siteId = ?, material_model = ?, material_name = ?;");
+			PreparedStatement st=c.prepareStatement("UPDATE Supplies SET retailer_id = ? WHERE site_id = ? and material_model = ? and material_name = ?;");
 			st.setString(1, rId);
 			st.setString(2, siteId);
 			st.setString(3, materialModel);

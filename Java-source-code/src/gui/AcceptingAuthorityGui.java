@@ -189,11 +189,15 @@ public class AcceptingAuthorityGui implements ActionListener {
 			String materialModel=tf5.getText();
 			String materialName=tf6.getText();
 			a.approveRawMaterial(rId, siteId, materialModel, materialName);
+			JFrame frame= new JFrame("Message");
+			JOptionPane.showMessageDialog(frame, "Assigned Successfully!");
 		}
 		else if(e.getSource()==b2)
 		{
 			String pId=tf4.getText();
 			a.approveSubcontracts(pId);
+			JFrame frame1= new JFrame("Message");
+			JOptionPane.showMessageDialog(frame1, "Assigned Successfully!");
 		}
 		
 	}

@@ -17,10 +17,10 @@ public class RetailerGui implements ActionListener {
 	JTextField t3;
 	JTextField t4;
 	Retailer r;
-	RetailerGui() {
+	public RetailerGui() {
 		new isRetailerRegistered();
 	}
-	RetailerGui(String id)
+	public RetailerGui(String id)
 	{
 		r= new Retailer(id);
 		retailerWindow = new JFrame();
@@ -103,10 +103,10 @@ public class RetailerGui implements ActionListener {
 		retailerWindow.setVisible(true);
 	}
 
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new RetailerGui();
-	}
+		//new RetailerGui();
+	//}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

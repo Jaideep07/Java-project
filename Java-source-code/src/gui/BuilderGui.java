@@ -127,8 +127,8 @@ public class BuilderGui implements ActionListener {
 	}
 		
 
-public static void main(String[] args) {
+//public static void main(String[] args) {
 	// TODO Auto-generated method stub
-	new BuilderGui("B1");
-	}
+	//new BuilderGui("B1");
+	//}
 }

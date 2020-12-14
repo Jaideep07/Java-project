@@ -53,7 +53,7 @@ public class Client {
 		return(Status);
 	}
 
-	public void enterSiteInfo(String street, String city, String state, String zipCode,String siteArea,String siteTerrain, String soilType, String clientId, String dateOfPurchase, String ownershipType)
+	public void enterSiteInfo(String street, String city, String state, String zipCode,String siteArea,String siteTerrain, String soilType, String dateOfPurchase, String ownershipType)
 	{
 		db.enterSiteInfo(street, city, state, zipCode, siteArea, siteTerrain, soilType, clientId, dateOfPurchase, ownershipType);
 

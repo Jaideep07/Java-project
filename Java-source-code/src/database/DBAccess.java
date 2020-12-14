@@ -18,7 +18,7 @@ public class DBAccess {
 		try {
 
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","Wildwest");
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","cv");
 		}
 		catch(SQLException e1)
 		{
@@ -750,7 +750,7 @@ public class DBAccess {
 		try
 		{
 			Statement st=c.createStatement();
-			ResultSet re = st.executeQuery("SELECT id,city,state,site_area_sqyards,site_terrain,soil_type FROM Project,Works_on,Site WHERE verification_status='verified' AND project_no=null;");
+			ResultSet re = st.executeQuery("SELECT id,city,state,site_area_sqyards,site_terrain,soil_type FROM Project,Works_on,Site WHERE verification_status='verified' AND Site.project_no=null;");
 			while(re.next())
 			{
 				Sites[i][0] = re.getString(1);
@@ -785,8 +785,7 @@ public class DBAccess {
 			PreparedStatement st=c.prepareStatement("INSERT INTO Works_on VALUES(?,?,5,'0%');");
 			st.setString(1, bId);
 			st.setString(2, pId);
-			st.executeQuery();
-			c.commit();
+			st.executeUpdate();
 			st.close();
 			c.close();
 
@@ -891,10 +890,10 @@ public class DBAccess {
 		Connection c=connect();
 		try
 		{
-			PreparedStatement st=c.prepareStatement("UPDATE Project SET completion_status=? where project_no=?;");
+			PreparedStatement st=c.prepareStatement("UPDATE Project SET completion_status=? where number=?;");
 			st.setString(1, status+"%");
 			st.setString(2, pId);
-			st.executeUpdate();
+			System.out.println(pId);
 			st.close();
 			c.close();
 
@@ -956,6 +955,7 @@ public class DBAccess {
 			PreparedStatement st=c.prepareStatement("UPDATE Builder SET salary=salary*? where id=?;");
 			st.setDouble(1, percent);
 			st.setString(2, bId);
+			
 			st.executeUpdate();
 			st.close();
 			c.close();

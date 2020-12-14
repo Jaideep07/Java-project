@@ -307,11 +307,9 @@ class registerRetailer implements ActionListener{
 			Retailer r = new Retailer();
 			String str= zipCodeR.getText();
 			int z=Integer.parseInt(str);
-			
-			@SuppressWarnings("deprecation")
 			String s = r.retailerRegistration(fnameR.getText(), streetNameR.getText(), cityR.getText(), stateR.getText(), z, passcodeR.getText(), emailR.getText());
 			JFrame frame= new JFrame("Message");
-			JOptionPane.showMessageDialog(frame, "Updated");
+			JOptionPane.showMessageDialog(frame, s);
 		}
 	}
 	
@@ -361,3 +359,4 @@ class isRetailerRegistered implements ActionListener{
 		}
 	}
 }
+

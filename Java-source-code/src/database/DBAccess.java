@@ -355,6 +355,7 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
+		System.out.println(num);
 		if(num==0)
 		{
 			return false;
@@ -365,9 +366,10 @@ public class DBAccess {
 		}
 	}
 
+
 	public String retailerRegistration(String n, String street,String city,String state,int zip,String password,String mail) {
 		Connection c=connect();
-		String ans=null;
+		String ans="Registered";
 		try
 		{
 			if(!(checkExistingRetailer(n,street,city,state,zip,mail)))
@@ -389,8 +391,8 @@ public class DBAccess {
 				st.setInt(6, zip);
 				st.setString(7, mail);
 				st.setString(8, password);
-				st.executeQuery();
-				ans="Registered Successfully";
+				st.executeUpdate();
+				ans="Registered Successfully and your id is "+ id;
 			}
 			else
 			{
@@ -403,7 +405,11 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		return ans;
+		finally
+		{
+			return ans;
+		}
+		
 	}
 
 

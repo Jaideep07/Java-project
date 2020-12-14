@@ -31,7 +31,8 @@ public class Retailer {
 
 	public String retailerRegistration(String n,String st,String c,String s,int z,String password,String mail)
 	{
-		return db.retailerRegistration(n,st,c,s,z,password,mail);
+		String str= db.retailerRegistration(n,st,c,s,z,password,mail);
+		return str;
 	}
 	
 	public void addMaterialDetails(String m_name,String model,String type,String manufacturer)
@@ -42,11 +43,6 @@ public class Retailer {
 	public String[][] viewOrders(String rId)
 	{
 		return db.viewRetailerOrders(rId);
-	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Retailer r=new Retailer();
-		r.retailerRegistration("Nagesh", "MG-Road", "Vijayawada", "Andhra Pradesh", 521165,"nn", "nagesh@gmailcom");
 	}
 
 }

@@ -196,7 +196,7 @@ public class SupervisorGui implements ActionListener{
 				SupWindow.dispose();
 			}
 			else if(e.getSource().equals(allocateRawMat)) {
-				s1.allocateRawMaterials(site.getText(), matName.getText(), matModel.getText());
+				//s1.allocateRawMaterials(site.getText(), matName.getText(), matModel.getText());
 			}
 			else if(e.getSource().equals(allocateSubCon)) {
 				s1.allocateSubcontracts(pno.getText(), contractName.getText(), companyName.getText(), Long.parseLong(contactno.getText()));

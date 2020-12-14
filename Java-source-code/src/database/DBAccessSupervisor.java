@@ -93,14 +93,14 @@ public class DBAccessSupervisor {
 
 	}
 	
-	public String[][] projectStatusSupervisor(String pId)
+	public String[][] projectStatusSupervisor(String bId)
 	{
 		Connection c=connect();
 		String performance[][] = new String[15][3];
 		try
 		{
 			PreparedStatement st = c.prepareStatement("SELECT Works_on.builder_id, project_no, completion_status FROM Works_on,Builder A, Builder B WHERE A.supervisor_id = B.id AND A.id = Works_on.builder_id AND B.id =?;");
-			st.setString(1, pId);
+			st.setString(1, bId);
 			ResultSet r = st.executeQuery();
 			int i=0;
 			while(r.next())

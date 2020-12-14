@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import actorClasses.*;
+import threads.*;
 
 public class ManagerGui implements ActionListener{
 	JFrame ManagerWindow = null;
@@ -41,9 +42,30 @@ public class ManagerGui implements ActionListener{
 		mid = username;
 		m = new Manager(mid);
 		
-		unallocatedSites = m.viewUnallocatedSites();
-		projectsForAssigning = m.viewProjectsForAssigning();
-		builderPerformance = m.builderPerformanceTracking();
+		SelectUnallocatedSites t1 = new SelectUnallocatedSites();
+		ViewProjectsForAssigning t2 = new ViewProjectsForAssigning(mid);
+		BuilderPerformanceTracking t3 = new BuilderPerformanceTracking(mid);
+		t1.run();
+		t2.run();
+		t3.run();
+		
+		try {
+			
+			t1.join();
+			t2.join();
+			t3.join();
+		}
+		
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+		unallocatedSites = t1.unallocatedSites;
+		projectsForAssigning = t2.projectsForAssigning;
+		builderPerformance = t3.builderPerformance;
 		
 		JLabel user = new JLabel("Welcome! "+ m.name);
 		user.setBounds(15,7,250,12);

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import actorClasses.*;
+import threads.*;
 
 public class ManagerGui implements ActionListener{
 	JFrame ManagerWindow = null;
@@ -30,12 +31,41 @@ public class ManagerGui implements ActionListener{
 	Manager m = null;
 	String mid = null;
 	
+	String[][] unallocatedSites = null;
+	String[][] projectsForAssigning = null;
+	String[][] builderPerformance = null;
+	
 	public ManagerGui(String username){
 		ManagerWindow = new JFrame("Manager");
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
 		JLabel background = new JLabel("",img,JLabel.CENTER);
 		mid = username;
-		m = new Manager(username);
+		m = new Manager(mid);
+		
+		SelectUnallocatedSites t1 = new SelectUnallocatedSites();
+		ViewProjectsForAssigning t2 = new ViewProjectsForAssigning(mid);
+		BuilderPerformanceTracking t3 = new BuilderPerformanceTracking(mid);
+		t1.run();
+		t2.run();
+		t3.run();
+		
+		try {
+			
+			t1.join();
+			t2.join();
+			t3.join();
+		}
+		
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+			System.err.println(e.getClass().getName()+": "+e.getMessage());
+			System.exit(0);
+		}
+		
+		unallocatedSites = t1.unallocatedSites;
+		projectsForAssigning = t2.projectsForAssigning;
+		builderPerformance = t3.builderPerformance;
 		
 		JLabel user = new JLabel("Welcome! "+ m.name);
 		user.setBounds(15,7,250,12);
@@ -262,6 +292,8 @@ public class ManagerGui implements ActionListener{
 		showProjects.addActionListener(this);
 	}
 	
+
+	
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource().equals(assign)) {
@@ -272,7 +304,7 @@ public class ManagerGui implements ActionListener{
 		else if(e.getSource().equals(showBuilder2)) {
 			JFrame frame= new JFrame("Builders");
 			String[] columns = {"Pno","start_date","end_date","completion_status","city","state","Works_on"};
-			JTable table = new JTable(m.viewProjectsForAssigning(),columns);
+			JTable table = new JTable(projectsForAssigning,columns);
 			JScrollPane scroll = new JScrollPane(table);
 			scroll.setSize(300,100);
 			frame.add(scroll);
@@ -282,7 +314,7 @@ public class ManagerGui implements ActionListener{
 		else if(e.getSource().equals(showBuilder1)) {
 			JFrame frame= new JFrame("Builders");
 			String[] columns = {"Builder","project_no","total_hours"};
-			JTable table = new JTable(m.builderPerformanceTracking(),columns);
+			JTable table = new JTable(builderPerformance,columns);
 			JScrollPane scroll = new JScrollPane(table);
 			scroll.setSize(300,100);
 			frame.add(scroll);
@@ -292,7 +324,7 @@ public class ManagerGui implements ActionListener{
 		else if(e.getSource().equals(showSite)) {
 			JFrame frame= new JFrame("Sites");
 			String[] columns = {"id","city","state","site_area_sqyards","site_terrain","soil_type"};
-			JTable table = new JTable(m.viewUnallocatedSites(),columns);
+			JTable table = new JTable(unallocatedSites,columns);
 			JScrollPane scroll = new JScrollPane(table);
 			scroll.setSize(300,100);
 			frame.add(scroll);
@@ -315,7 +347,7 @@ public class ManagerGui implements ActionListener{
 			JOptionPane.showMessageDialog(frame, "Paid Successfully!");
 		}
 		else if(e.getSource().equals(update)) {
-			m.updateProjectStatus(project1.getText(),status.getText());
+			m.updateProjectStatus(project2.getText(),status.getText());
 			JFrame frame= new JFrame("Message");
 			JOptionPane.showMessageDialog(frame, "Updated Successfully!");
 		}

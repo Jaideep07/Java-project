@@ -28,9 +28,9 @@ public class Supervisor extends Builder implements ProjectOperations{
 		return(builders);
 	}
 	
-	public String[][] projectStatus(String pId)
+	public String[][] projectStatus(String bId)
 	{
-		String performance[][] = db.projectStatusSupervisor(pId);
+		String performance[][] = db.projectStatusSupervisor(bId);
 		return(performance);
 	}
 	

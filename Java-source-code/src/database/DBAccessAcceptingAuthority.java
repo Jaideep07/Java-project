@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBAccessAcceptingAuthority {
-	
+
 	Connection connect()
 	{
 		Connection c=null;
@@ -30,7 +30,7 @@ public class DBAccessAcceptingAuthority {
 		}
 		return(c);
 	}
-	
+
 	public String[][] getRetailers()
 	{
 		Connection c=connect();
@@ -95,7 +95,7 @@ public class DBAccessAcceptingAuthority {
 		Connection c=connect();
 		try
 		{
-			PreparedStatement st=c.prepareStatement("UPDATE Supplies SET retailer_id = ? WHERE site_id = ? and material_model = ? and material_name = ?;");
+			PreparedStatement st=c.prepareStatement("UPDATE Supplies SET retailer_id = ? WHERE site_Id = ? AND material_model = ? AND material_name = ?;");
 			st.setString(1, rId);
 			st.setString(2, siteId);
 			st.setString(3, materialModel);

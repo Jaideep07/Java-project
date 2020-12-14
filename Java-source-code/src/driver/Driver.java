@@ -134,8 +134,22 @@ class loginUI implements ActionListener{
 										message.setText(ul.managerLogin(username,password));
 								}
 						 break;
-				case("Supervisor"): message.setText(ul.supervisorLogin(username,password));
+				case("Supervisor"): if((ul.supervisorLogin(username,password)).equals("Success")) {
+											new SupervisorGui(username);
+											loginWindow.dispose();
+									}
+									else if(e.getSource() != select){
+											message.setText(ul.supervisorLogin(username,password));
+									}
 						 break;
+				case("AcceptingAUTH"): if(username == "AA1" && password == "AA123") {
+											new SupervisorGui(username);
+											loginWindow.dispose();
+									}
+									else if(e.getSource() != select){
+											message.setText("Incorrect username or password");
+									}
+						 break;		 
 				case("None"): message.setText("Please select a LOGIN TYPE!");
 				 		 break;		 
 			}
@@ -148,7 +162,7 @@ public class Driver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new loginUI();
-		//new SupervisorGui("B1");
+		
 	}
 
 }

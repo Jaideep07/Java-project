@@ -4,7 +4,7 @@ import database.*;
 
 public class UserLogin {
 	
-	DBAccess db = new DBAccess();
+	DBAccessLogin db = new DBAccessLogin();
 
 	public String clientLogin(String usrName, String password)
 	{

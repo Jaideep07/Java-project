@@ -1,6 +1,6 @@
 # Construction Company Management System
 
-""" bash
+'''bash
 Java-source-code/src/
 ├── actorClasses
 │   ├── AcceptingAuthority.java
@@ -30,5 +30,4 @@ Java-source-code/src/
 │   └── RetailerGui.java
 └── threads
     └── client
-    
-"""
+'''

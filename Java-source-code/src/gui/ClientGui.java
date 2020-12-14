@@ -36,7 +36,7 @@ class registerClient implements ActionListener{
 	JLabel email = null;
 	JTextField emailC = null;
 	JLabel msg = null; 
-	
+	Client c = new Client();
 	public registerClient(){
 		CRegis = new JFrame("Client Registration");
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
@@ -215,7 +215,7 @@ class registerClient implements ActionListener{
 			CRegis.dispose();
 		}
 		else if(e.getSource().equals(registerC)) {
-			Client c = new Client();
+			
 			String[] s = new String[1];
 			s[0] = emailC.getText();
 			long[] l = new long[1];
@@ -303,8 +303,10 @@ class siteRegistration implements ActionListener{
 	JLabel dateOfPurchase = null;
 	JTextField dateOfPurchaseT = null;
 	
+	Client cl = null;
 	public siteRegistration(String username){
 		userid = username;
+		cl = new Client(userid);
 		siteRegis = new JFrame("Site Registration");
 		ImageIcon img = new ImageIcon("src/Construction.jpg");
 		JLabel background = new JLabel("",img,JLabel.CENTER);
@@ -458,6 +460,7 @@ class siteRegistration implements ActionListener{
 		siteRegis.setLayout(null);
 		siteRegis.setVisible(true);
 		
+		/*
 		streetNameT.addActionListener(this);
 		cityT.addActionListener(this);
 		stateT.addActionListener(this);
@@ -466,7 +469,7 @@ class siteRegistration implements ActionListener{
 		terrinTypeT.addActionListener(this);
 		soilTypeT.addActionListener(this);
 		ownerTypeT.addActionListener(this);
-		dateOfPurchaseT.addActionListener(this);
+		dateOfPurchaseT.addActionListener(this);*/
 		exitS.addActionListener(this);
 		registerS.addActionListener(this);
 	}
@@ -476,8 +479,8 @@ class siteRegistration implements ActionListener{
 			siteRegis.dispose();
 		}
 		else if(e.getSource().equals(registerS)) {
-			Client cl = new Client(userid);
-			cl.enterSiteInfo(streetNameT.getText(), cityT.getText(), stateT.getText(), zipCodeT.getText(), areaT.getText(), terrinTypeT.getText(), soilTypeT.getSelectedText(), userid, dateOfPurchaseT.getText(), ownerTypeT.getText());
+			
+			cl.enterSiteInfo(streetNameT.getText(), cityT.getText(), stateT.getText(), zipCodeT.getText(), areaT.getText(), terrinTypeT.getText(), soilTypeT.getSelectedText(), dateOfPurchaseT.getText(), ownerTypeT.getText());
 			JFrame frame= new JFrame("Message");
 			JOptionPane.showMessageDialog(frame, "Registered Successfully!");
 		}

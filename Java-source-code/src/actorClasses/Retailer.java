@@ -11,7 +11,7 @@ public class Retailer {
 	public String email;
 	private String password;
 	public double serviceRating;
-	DBAccess db = new DBAccess();
+	DBAccessRetailer db = new DBAccessRetailer();
 	
 	public Retailer()
 	{

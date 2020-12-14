@@ -1,10 +1,10 @@
 package actorClasses;
 
-import database.DBAccess;
+import database.DBAccessManager;
 
 public class Manager extends Builder implements ProjectOperations{
 
-	DBAccess db = new DBAccess();
+	DBAccessManager db = new DBAccessManager();
 
 	public Manager(String mId)
 	{

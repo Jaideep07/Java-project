@@ -142,6 +142,14 @@ class loginUI implements ActionListener{
 											message.setText(ul.supervisorLogin(username,password));
 									}
 						 break;
+				case("AcceptingAUTH"): if(username == "AA1" && password == "AA123") {
+											new SupervisorGui(username);
+											loginWindow.dispose();
+									}
+									else if(e.getSource() != select){
+											message.setText("Incorrect username or password");
+									}
+						 break;		 
 				case("None"): message.setText("Please select a LOGIN TYPE!");
 				 		 break;		 
 			}

@@ -562,5 +562,9 @@ public class ClientGui implements ActionListener {
 			new siteRegistration(userID);
 		}
 	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new ClientGui();
+	}
 
 }

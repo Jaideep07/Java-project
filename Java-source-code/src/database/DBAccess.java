@@ -18,7 +18,9 @@ public class DBAccess {
 		try {
 
 		Class.forName("org.postgresql.Driver");
-		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","Wildwest");
+
+		c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBMSproject","postgres","postgres");
+
 		}
 		catch(SQLException e1)
 		{
@@ -363,10 +365,13 @@ public class DBAccess {
 		}
 	}
 
-	public void retailerRegistration(String n, String street,String city,String state,int zip,String mail) {
+	public String retailerRegistration(String n, String street,String city,String state,int zip,String password,String mail) {
 		Connection c=connect();
+		String ans=null;
 		try
 		{
+			if(!(checkExistingRetailer(n,street,city,state,zip,mail)))
+			{
 				PreparedStatement s=c.prepareStatement("select count(*) from Retailer;");
 				ResultSet r=s.executeQuery();
 				int num = 0;
@@ -375,7 +380,7 @@ public class DBAccess {
 					num=r.getInt(1);
 				}
 				String id="R"+(num+1);
-				PreparedStatement st=c.prepareStatement("insert into Retailer values(?,?,?,?,?,?,?);");
+				PreparedStatement st=c.prepareStatement("insert into Retailer values(?,?,?,?,?,?,?,crypt(?,gen_salt('bf',4)));");
 				st.setString(1, id);
 				st.setString(2, n);
 				st.setString(3, street);
@@ -383,21 +388,26 @@ public class DBAccess {
 				st.setString(5, state);
 				st.setInt(6, zip);
 				st.setString(7, mail);
+				st.setString(8, password);
 				st.executeQuery();
+				ans="Registered Successfully";
 			}
-
-		
+			else
+			{
+				ans="You are already Registered";
+			}
+		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-
+		return ans;
 	}
 
 
-	public void viewRetailerOrders(String rId) {
+	public String[][] viewRetailerOrders(String rId) {
 		// TODO Auto-generated method stub
 		Connection c=connect();
 		String orderDetail[][]=new String[10][5];
@@ -422,7 +432,7 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		//return data for gui part
+		return orderDetail;
 
 	}
 
@@ -1153,7 +1163,7 @@ public class DBAccess {
 		String rawMaterials[][] = new String[18][4];
 		try
 		{
-			PreparedStatement st = c.prepareStatement("SELECT site_id,material_model,material_name FROM Supplies WHERE retialer_id=null;");
+			PreparedStatement st = c.prepareStatement("SELECT site_id,material_model,material_name FROM Supplies WHERE retailer_id=null;");
 			ResultSet r = st.executeQuery();
 			int i=0;
 			while(r.next())

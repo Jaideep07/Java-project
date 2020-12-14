@@ -92,6 +92,9 @@ class loginUI implements ActionListener{
 		if(type.equals("Client") && e.getSource() == select) {
 			new ClientGui();
 		}
+		else if(type.equals("Retailer") && e.getSource() == select) {
+			new RetailerGui();
+		}
 		else {
 			String username = id.getText();
 			String password = String.valueOf(code.getPassword());
@@ -106,7 +109,14 @@ class loginUI implements ActionListener{
 										message.setText(ul.clientLogin(username,password));
 								}
 						 break;
-				case("Retailer"): message.setText(ul.retailerLogin(username, password));
+				case("Retailer"): if((ul.retailerLogin(username,password)).equals("Success")) {
+										new RetailerGui(username);
+										loginWindow.dispose();
+								}
+										
+								  else if(e.getSource() != select) {
+									  message.setText(ul.retailerLogin(username, password));
+								  }
 						 break;
 				case("Builder"): if((ul.builderLogin(username,password)).equals("Success")) {
 										new BuilderGui(username);
@@ -148,4 +158,6 @@ public class Driver {
 	}
 
 }
+
+
 

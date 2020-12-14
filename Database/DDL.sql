@@ -492,4 +492,6 @@ SELECT id,name,state,service_rating FROM Retailer;
 
 SELECT DISTINCT material_name ,material_model,material_type ,manufacturer FROM Retailer_Material;
 
-
+DELETE FROM Site WHERE id='S9';
+SELECT * FROM Works_on WHERE project_no = 'P1';
+SELECT * FROM Project;

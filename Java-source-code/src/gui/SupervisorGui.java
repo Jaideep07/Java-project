@@ -249,8 +249,10 @@ public class SupervisorGui implements ActionListener{
 			if(e.getSource().equals(exit)) {
 				SupWindow.dispose();
 			}
+
 			if(e.getSource().equals(allocateRawMat)) {
 				s1.allocateRawMaterials(site.getText(), matName.getText(), matModel.getText(),Integer.parseInt(materialQty.getText()),Integer.parseInt(reorderLevel.getText()),Integer.parseInt(avilableQty.getText()));
+
 			}
 			if(e.getSource().equals(allocateSubCon)) {
 				s1.allocateSubcontracts(pno.getText(), contractName.getText(), companyName.getText(), Long.parseLong(contactno.getText()));

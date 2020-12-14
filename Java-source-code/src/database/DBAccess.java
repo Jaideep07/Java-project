@@ -363,10 +363,13 @@ public class DBAccess {
 		}
 	}
 
-	public void retailerRegistration(String n, String street,String city,String state,int zip,String mail) {
+	public String retailerRegistration(String n, String street,String city,String state,int zip,String password,String mail) {
 		Connection c=connect();
+		String ans=null;
 		try
 		{
+			if(!(checkExistingRetailer(n,street,city,state,zip,mail)))
+			{
 				PreparedStatement s=c.prepareStatement("select count(*) from Retailer;");
 				ResultSet r=s.executeQuery();
 				int num = 0;
@@ -375,7 +378,7 @@ public class DBAccess {
 					num=r.getInt(1);
 				}
 				String id="R"+(num+1);
-				PreparedStatement st=c.prepareStatement("insert into Retailer values(?,?,?,?,?,?,?);");
+				PreparedStatement st=c.prepareStatement("insert into Retailer values(?,?,?,?,?,?,?,crypt(?,gen_salt('bf',4)));");
 				st.setString(1, id);
 				st.setString(2, n);
 				st.setString(3, street);
@@ -383,21 +386,26 @@ public class DBAccess {
 				st.setString(5, state);
 				st.setInt(6, zip);
 				st.setString(7, mail);
+				st.setString(8, password);
 				st.executeQuery();
+				ans="Registered Successfully";
 			}
-
-		
+			else
+			{
+				ans="You are already Registered";
+			}
+		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-
+		return ans;
 	}
 
 
-	public void viewRetailerOrders(String rId) {
+	public String[][] viewRetailerOrders(String rId) {
 		// TODO Auto-generated method stub
 		Connection c=connect();
 		String orderDetail[][]=new String[10][5];
@@ -422,7 +430,7 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		//return data for gui part
+		return orderDetail;
 
 	}
 
@@ -946,7 +954,7 @@ public class DBAccess {
 		}
 
 	}
-	
+
 	public void giveSalaryBonus(String bId, double percent)
 	{
 		Connection c=connect();
@@ -955,7 +963,7 @@ public class DBAccess {
 			PreparedStatement st=c.prepareStatement("UPDATE Builder SET salary=salary*? where id=?;");
 			st.setDouble(1, percent);
 			st.setString(2, bId);
-			
+
 			st.executeUpdate();
 			st.close();
 			c.close();
@@ -968,9 +976,9 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
+
 	}
-	
+
 	public String[][] builderPerformanceTrackingSupervisor(String sId)
 	{
 		Connection c=connect();
@@ -1000,7 +1008,7 @@ public class DBAccess {
 		}
 
 	}
-	
+
 	public void allocateRawMaterials(String siteId, String materialName, String materialModel)
 	{
 		Connection c=connect();
@@ -1028,9 +1036,9 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
+
 	}
-	
+
 	public String[][] projectStatusSupervisor(String pId)
 	{
 		Connection c=connect();
@@ -1058,9 +1066,9 @@ public class DBAccess {
 			System.exit(0);
 			return(performance);
 		}
-		
+
 	}
-	
+
 	public void allocateSubcontracts(String pNo, String contractName, String companyName, long contactNumber)
 	{
 		Connection c=connect();
@@ -1084,9 +1092,9 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
+
 	}
-	
+
 	public String[][] getRawMaterials()
 	{
 		Connection c=connect();
@@ -1114,9 +1122,9 @@ public class DBAccess {
 			System.exit(0);
 			return(rawMaterials);
 		}
-		
+
 	}
-	
+
 	public String[][] getRetailers()
 	{
 		Connection c=connect();
@@ -1144,16 +1152,16 @@ public class DBAccess {
 			System.exit(0);
 			return(retailers);
 		}
-		
+
 	}
-	
+
 	public String[][] getUnallocatedRawMaterials()
 	{
 		Connection c=connect();
 		String rawMaterials[][] = new String[18][4];
 		try
 		{
-			PreparedStatement st = c.prepareStatement("SELECT site_id,material_model,material_name FROM Supplies WHERE retialer_id=null;");
+			PreparedStatement st = c.prepareStatement("SELECT site_id,material_model,material_name FROM Supplies WHERE retailer_id=null;");
 			ResultSet r = st.executeQuery();
 			int i=0;
 			while(r.next())
@@ -1173,9 +1181,9 @@ public class DBAccess {
 			System.exit(0);
 			return(rawMaterials);
 		}
-		
+
 	}
-	
+
 	public void approveRawMaterials(String rId, String siteId, String materialModel, String materialName)
 	{
 		Connection c=connect();
@@ -1198,10 +1206,10 @@ public class DBAccess {
 			System.err.println(e.getClass().getName()+": "+e.getMessage());
 			System.exit(0);
 		}
-		
-		
+
+
 	}
-	
+
 	public void approveSubcontracts(String pId)
 	{
 		Connection c=connect();
@@ -1222,7 +1230,7 @@ public class DBAccess {
 			System.exit(0);
 		}
 	}
-	
+
 	public String[][] viewSubcontracts()
 	{
 		Connection c=connect();
@@ -1251,7 +1259,7 @@ public class DBAccess {
 			System.exit(0);
 			return(subcontracts);
 		}
-		
+
 	}
-	
+
 }

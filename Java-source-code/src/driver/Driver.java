@@ -41,7 +41,7 @@ class loginUI implements ActionListener{
 		loginType.setBounds(90,90,100,20);
 		log.add(loginType);
 		
-	    String type[] = { "None","Manager","Retailer","Builder","Client","Supervisor"};
+	    String type[] = { "None","Manager","Retailer","Builder","Client","Supervisor","AcceptingAUTH"};
 	    select = new JComboBox(type);
 	    select.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 	    select.setBounds(200,90,100,22);
@@ -138,6 +138,7 @@ public class Driver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		new loginUI();
+		//new SupervisorGui("B1");
 	}
 
 }

@@ -27,7 +27,11 @@ Java-source-code/src/
 │   ├── BuilderGui.java
 │   ├── ClientGui.java
 │   ├── ManagerGui.java
-│   └── RetailerGui.java
+│   ├── RetailerGui.java
+│   └── SupervisorGui.java
 └── threads
-    └── client
+    ├── BuilderPerformanceTracking.java
+    ├── SelectUnallocatedSites.java
+    └── ViewProjectsForAssigning.java
+
 ```
